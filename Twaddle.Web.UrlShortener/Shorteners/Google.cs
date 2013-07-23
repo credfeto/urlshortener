@@ -61,9 +61,6 @@ namespace Twaddle.Web.UrlShortener.Shorteners
             Justification = "Many possible exceptions")]
         public Uri Shorten([NotNull] Uri url)
         {
-            Contract.Requires(url != null);
-            Contract.Ensures(Contract.Result<Uri>() != null);
-
             string post = "{\"longUrl\": \"" + url + "\"}";
             var request =
                 (HttpWebRequest)
