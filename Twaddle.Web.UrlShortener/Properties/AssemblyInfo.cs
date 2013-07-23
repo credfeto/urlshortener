@@ -21,7 +21,7 @@ using System.Security;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("Twaddle.Web.UrlShortener")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("Various URL Shortening routines")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Twaddle Software")]
 [assembly: AssemblyProduct("Url Shortner")]
