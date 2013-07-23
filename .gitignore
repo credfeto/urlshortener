@@ -3,3 +3,4 @@
 *.suo
 */StyleCop.Cache
 *.user
+packages/
