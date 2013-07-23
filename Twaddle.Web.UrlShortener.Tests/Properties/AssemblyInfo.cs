@@ -55,5 +55,3 @@ using System.Security;
 // Performance: Tell .NET runtime to look in this assembly for English
 [assembly: NeutralResourcesLanguage("en", UltimateResourceFallbackLocation.MainAssembly)]
 [assembly: AssemblyInformationalVersion("1.0.0.1")]
-[assembly: SecurityTransparent]
-[assembly: SecurityRules(SecurityRuleSet.Level2)]
