@@ -10,18 +10,16 @@ namespace Credfeto.UrlShortener.Shorteners
     {
         private readonly Func<Uri, Uri> _shortener;
 
-
         public Generic(Func<Uri, Uri> shortener)
         {
             Contract.Requires(shortener != null);
-            Contract.Ensures(shortener == _shortener);
-            _shortener = shortener;
+            Contract.Ensures(shortener == this._shortener);
+            this._shortener = shortener;
         }
-
 
         public Uri Shorten(Uri fullUrl)
         {
-            return _shortener(fullUrl);
+            return this._shortener(fullUrl);
         }
     }
 }

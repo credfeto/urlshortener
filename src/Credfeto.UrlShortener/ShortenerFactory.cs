@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics.Contracts;
+using System.Linq;
 using Credfeto.UrlShortener.Shorteners;
 
 namespace Credfeto.UrlShortener
@@ -9,6 +11,13 @@ namespace Credfeto.UrlShortener
     /// </summary>
     public sealed class ShortenerFactory : IShortenerFactory
     {
+        private readonly IReadOnlyList<IUrlShortener> _shorteners;
+
+        public ShortenerFactory(IEnumerable<IUrlShortener> shorteners)
+        {
+            this._shorteners = shorteners.ToArray();
+        }
+
         /// <summary>
         ///     Creates an instance of the specified publisher.
         /// </summary>
@@ -23,13 +32,18 @@ namespace Credfeto.UrlShortener
             Contract.Requires(!string.IsNullOrEmpty(type));
             Contract.Ensures(Contract.Result<IUrlShortener>() != null);
 
-            if (StringComparer.InvariantCultureIgnoreCase.Equals(type, "Bitly")) return new Bitly();
+            if (StringComparer.InvariantCultureIgnoreCase.Equals(x: type, y: "Bitly"))
+            {
+                return new Bitly();
+            }
 
-            if (StringComparer.InvariantCultureIgnoreCase.Equals(type, "Google")) return new Google();
+            if (StringComparer.InvariantCultureIgnoreCase.Equals(x: type, y: "Google"))
+            {
+                return new Google();
+            }
 
             return new Generic(DoNotShorten);
         }
-
 
         private static Uri DoNotShorten(Uri fullUrl)
         {

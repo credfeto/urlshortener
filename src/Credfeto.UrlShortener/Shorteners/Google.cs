@@ -22,58 +22,67 @@ namespace Credfeto.UrlShortener.Shorteners
         private readonly ILogger<Google> _logging;
         private readonly IOptions<GoogleConfiguration> _options;
 
-        public Google(IHttpClientFactory httpClientFactory, IOptions<GoogleConfiguration> options,
-            ILogger<Google> logging)
+        public Google(IHttpClientFactory httpClientFactory, IOptions<GoogleConfiguration> options, ILogger<Google> logging)
         {
-            _httpClientFactory = httpClientFactory;
-            _options = options;
-            _logging = logging;
+            this._httpClientFactory = httpClientFactory;
+            this._options = options;
+            this._logging = logging;
         }
-
 
         /// <summary>
         ///     Shortens the given URL.
         /// </summary>
-        /// <param name="url">
+        /// <param name="fullUrl">
         ///     The URL to shorten.
         /// </param>
         /// <returns>
         ///     The shortened version of the URL.
         /// </returns>
-        public Uri Shorten([NotNull] Uri url)
+        public Uri Shorten([NotNull] Uri fullUrl)
         {
-            var post = "{\"longUrl\": \"" + url + "\"}";
-            var request =
-                (HttpWebRequest)
-                WebRequest.Create(
-                    new Uri("https://www.googleapis.com/urlshortener/v1/url?key=" + _options.Value.ApiKey));
+            string post = "{\"longUrl\": \"" + fullUrl + "\"}";
+            HttpWebRequest request = (HttpWebRequest) WebRequest.Create(new Uri("https://www.googleapis.com/urlshortener/v1/url?key=" + this._options.Value.ApiKey));
+
             try
             {
                 request.ServicePoint.Expect100Continue = false;
                 request.Method = "POST";
                 request.ContentLength = post.Length;
                 request.ContentType = "application/json";
-                request.Headers.Add("Cache-Control", "no-cache");
+                request.Headers.Add(name: "Cache-Control", value: "no-cache");
 
-                using (var requestStream = request.GetRequestStream())
+                using (Stream requestStream = request.GetRequestStream())
                 {
-                    var postBuffer = Encoding.ASCII.GetBytes(post);
-                    requestStream.Write(postBuffer, 0, postBuffer.Length);
+                    byte[] postBuffer = Encoding.ASCII.GetBytes(post);
+                    requestStream.Write(buffer: postBuffer, offset: 0, count: postBuffer.Length);
                 }
 
-                using (var response = (HttpWebResponse) request.GetResponse())
+                using (HttpWebResponse response = (HttpWebResponse) request.GetResponse())
                 {
-                    using (var responseStream = response.GetResponseStream())
+                    using (Stream responseStream = response.GetResponseStream())
                     {
-                        if (responseStream == null) return url;
-
-                        using (var responseReader = new StreamReader(responseStream))
+                        if (responseStream == null)
                         {
-                            var json = responseReader.ReadToEnd();
-                            if (string.IsNullOrEmpty(json)) return url;
+                            return fullUrl;
+                        }
 
-                            var shortened = Regex.Match(json, @"""id"": ?""(?<id>.+)""").Groups["id"].Value;
-                            if (string.IsNullOrEmpty(shortened)) return url;
+                        using (StreamReader responseReader = new StreamReader(responseStream))
+                        {
+                            string json = responseReader.ReadToEnd();
+
+                            if (string.IsNullOrEmpty(json))
+                            {
+                                return fullUrl;
+                            }
+
+                            string shortened = Regex.Match(input: json, pattern: @"""id"": ?""(?<id>.+)""")
+                                                    .Groups["id"]
+                                                    .Value;
+
+                            if (string.IsNullOrEmpty(shortened))
+                            {
+                                return fullUrl;
+                            }
 
                             return new Uri(shortened);
                         }
@@ -83,7 +92,7 @@ namespace Credfeto.UrlShortener.Shorteners
             catch (Exception)
             {
                 // if Google's URL Shortner is down...
-                return url;
+                return fullUrl;
             }
         }
     }
@@ -91,6 +100,7 @@ namespace Credfeto.UrlShortener.Shorteners
     public sealed class GoogleConfiguration
     {
         public string ApiKey { get; set; }
+
         public string Login { get; set; }
     }
 }

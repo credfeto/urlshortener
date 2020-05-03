@@ -16,8 +16,7 @@ namespace Credfeto.UrlShortener.Shorteners
     /// <remarks>
     ///     Get free key from https://bitly.com/a/your_api_key for up to 1000000 shortenings per day.
     /// </remarks>
-    [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly",
-        Justification = "Bitly is name of site.")]
+    [SuppressMessage(category: "Microsoft.Naming", checkId: "CA1704:IdentifiersShouldBeSpelledCorrectly", Justification = "Bitly is name of site.")]
     public sealed class Bitly : IUrlShortener
     {
         private readonly IHttpClientFactory _httpClientFactory;
@@ -26,46 +25,48 @@ namespace Credfeto.UrlShortener.Shorteners
 
         public Bitly(IHttpClientFactory httpClientFactory, IOptions<BitlyConfiguration> options, ILogger<Bitly> logging)
         {
-            _httpClientFactory = httpClientFactory;
-            _logging = logging;
-            _options = options;
+            this._httpClientFactory = httpClientFactory;
+            this._logging = logging;
+            this._options = options;
         }
-
 
         /// <summary>
         ///     Shortens the given URL.
         /// </summary>
-        /// <param name="url">The URL to shorten.</param>
+        /// <param name="fullUrl">The URL to shorten.</param>
         /// <returns>
         ///     The shortened version of the URL.
         /// </returns>
-        public Uri Shorten([NotNull] Uri url)
+        public Uri Shorten([NotNull] Uri fullUrl)
         {
-            var encodedUrl = HttpUtility.UrlEncode(url.ToString());
-            var urlRequest =
-                string.Format(
-                    CultureInfo.InvariantCulture,
-                    "https://api-ssl.bit.ly/v3/shorten?apiKey={0}&login={1}&format=txt&longurl={2}",
-                    _options.Value.ApiKey,
-                    _options.Value.Login,
-                    encodedUrl);
+            string encodedUrl = HttpUtility.UrlEncode(fullUrl.ToString());
+            string urlRequest = string.Format(provider: CultureInfo.InvariantCulture,
+                                              format: "https://api-ssl.bit.ly/v3/shorten?apiKey={0}&login={1}&format=txt&longurl={2}",
+                                              arg0: this._options.Value.ApiKey,
+                                              arg1: this._options.Value.Login,
+                                              arg2: encodedUrl);
 
-            var request = (HttpWebRequest) WebRequest.Create(new Uri(urlRequest));
+            HttpWebRequest request = (HttpWebRequest) WebRequest.Create(new Uri(urlRequest));
+
             try
             {
                 request.ContentType = "application/json";
-                request.Headers.Add("Cache-Control", "no-cache");
-                using (var response = (HttpWebResponse) request.GetResponse())
+                request.Headers.Add(name: "Cache-Control", value: "no-cache");
+
+                using (HttpWebResponse response = (HttpWebResponse) request.GetResponse())
                 {
-                    using (var responseStream = response.GetResponseStream())
+                    using (Stream responseStream = response.GetResponseStream())
                     {
-                        if (responseStream == null) return url;
-
-                        using (var responseReader = new StreamReader(responseStream))
+                        if (responseStream == null)
                         {
-                            var shortened = responseReader.ReadToEnd();
+                            return fullUrl;
+                        }
 
-                            return string.IsNullOrEmpty(shortened) ? url : new Uri(shortened);
+                        using (StreamReader responseReader = new StreamReader(responseStream))
+                        {
+                            string shortened = responseReader.ReadToEnd();
+
+                            return string.IsNullOrEmpty(shortened) ? fullUrl : new Uri(shortened);
                         }
                     }
                 }
@@ -73,7 +74,7 @@ namespace Credfeto.UrlShortener.Shorteners
             catch (Exception)
             {
                 // if Bitly's URL Shortner is down...
-                return url;
+                return fullUrl;
             }
         }
     }
@@ -81,6 +82,7 @@ namespace Credfeto.UrlShortener.Shorteners
     public sealed class BitlyConfiguration
     {
         public string ApiKey { get; set; }
+
         public string Login { get; set; }
     }
 }

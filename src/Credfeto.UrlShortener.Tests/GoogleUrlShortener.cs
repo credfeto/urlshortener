@@ -12,8 +12,8 @@ namespace Credfeto.UrlShortener.Tests
     {
         public GoogleUrlShortener(ITestOutputHelper output)
         {
-            _output = output;
-            _shortener = new Google();
+            this._output = output;
+            this._shortener = new Google();
         }
 
         private readonly ITestOutputHelper _output;
@@ -28,13 +28,14 @@ namespace Credfeto.UrlShortener.Tests
         {
             const string originalUrl = "http://www.markridgwell.co.uk/";
 
-
-            var shorterned = _shortener.Shorten(new Uri(originalUrl));
-            _output.WriteLine(shorterned.ToString());
-            Assert.NotEqual(originalUrl, shorterned.ToString());
-            Assert.True(shorterned.ToString().StartsWith("http://goo.gl/", StringComparison.OrdinalIgnoreCase));
-            Assert.True(shorterned.ToString().Length <= originalUrl.Length);
-            Assert.Equal("http://goo.gl/M0LEn", shorterned.ToString());
+            Uri shorterned = this._shortener.Shorten(new Uri(originalUrl));
+            this._output.WriteLine(shorterned.ToString());
+            Assert.NotEqual(expected: originalUrl, shorterned.ToString());
+            Assert.True(shorterned.ToString()
+                                  .StartsWith(value: "http://goo.gl/", comparisonType: StringComparison.OrdinalIgnoreCase));
+            Assert.True(shorterned.ToString()
+                                  .Length <= originalUrl.Length);
+            Assert.Equal(expected: "http://goo.gl/M0LEn", shorterned.ToString());
         }
     }
 }
