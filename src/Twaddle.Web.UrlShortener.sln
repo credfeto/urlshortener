@@ -2,9 +2,6 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{F95EA2F6-57A4-4BCB-93F2-C4318F442A93}"
-	ProjectSection(SolutionItems) = preProject
-		BuildAll.proj = BuildAll.proj
-	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Twaddle.Web.UrlShortener", "Twaddle.Web.UrlShortener\Twaddle.Web.UrlShortener.csproj", "{998AECD3-4E3C-46DE-BDA9-2E43DBC8F2B0}"
 EndProject
