@@ -7,7 +7,7 @@ namespace Credfeto.UrlShortener
     /// <summary>
     ///     Factory for creating Url Shorteners.
     /// </summary>
-    public static class ShortenerFactory
+    public sealed class ShortenerFactory : IShortenerFactory
     {
         /// <summary>
         ///     Creates an instance of the specified publisher.
@@ -18,7 +18,7 @@ namespace Credfeto.UrlShortener
         /// <returns>
         ///     The requested publisher if a matching one can be found; otherwise, <see langword="null" />.
         /// </returns>
-        public static IUrlShortener Create(string type)
+        public IUrlShortener Create(string type)
         {
             Contract.Requires(!string.IsNullOrEmpty(type));
             Contract.Ensures(Contract.Result<IUrlShortener>() != null);

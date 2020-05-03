@@ -3,7 +3,10 @@ using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.IO;
 using System.Net;
+using System.Net.Http;
 using System.Web;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 
 namespace Credfeto.UrlShortener.Shorteners
 {
@@ -15,22 +18,17 @@ namespace Credfeto.UrlShortener.Shorteners
     /// </remarks>
     [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly",
         Justification = "Bitly is name of site.")]
-    public class Bitly : IUrlShortener
+    public sealed class Bitly : IUrlShortener
     {
-        /// <summary>
-        ///     The API key.
-        /// </summary>
-        [NotNull] private readonly string _key;
+        private readonly IHttpClientFactory _httpClientFactory;
+        private readonly ILogger<Bitly> _logging;
+        private readonly IOptions<BitlyConfiguration> _options;
 
-        /// <summary>
-        ///     The bitly username.
-        /// </summary>
-        [NotNull] private readonly string _login;
-
-        public Bitly()
+        public Bitly(IHttpClientFactory httpClientFactory, IOptions<BitlyConfiguration> options, ILogger<Bitly> logging)
         {
-            _key = ConfigurationManager.AppSettings["BitLyApiKey"];
-            _login = ConfigurationManager.AppSettings["BitLyLogin"];
+            _httpClientFactory = httpClientFactory;
+            _logging = logging;
+            _options = options;
         }
 
 
@@ -48,8 +46,8 @@ namespace Credfeto.UrlShortener.Shorteners
                 string.Format(
                     CultureInfo.InvariantCulture,
                     "https://api-ssl.bit.ly/v3/shorten?apiKey={0}&login={1}&format=txt&longurl={2}",
-                    _key,
-                    _login,
+                    _options.Value.ApiKey,
+                    _options.Value.Login,
                     encodedUrl);
 
             var request = (HttpWebRequest) WebRequest.Create(new Uri(urlRequest));
@@ -78,5 +76,11 @@ namespace Credfeto.UrlShortener.Shorteners
                 return url;
             }
         }
+    }
+
+    public sealed class BitlyConfiguration
+    {
+        public string ApiKey { get; set; }
+        public string Login { get; set; }
     }
 }

@@ -2,8 +2,11 @@
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Net;
+using System.Net.Http;
 using System.Text;
 using System.Text.RegularExpressions;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 
 namespace Credfeto.UrlShortener.Shorteners
 {
@@ -15,15 +18,16 @@ namespace Credfeto.UrlShortener.Shorteners
     /// </remarks>
     public class Google : IUrlShortener
     {
-        /// <summary>
-        ///     The API key.
-        /// </summary>
-        private readonly string _key;
+        private readonly IHttpClientFactory _httpClientFactory;
+        private readonly ILogger<Google> _logging;
+        private readonly IOptions<GoogleConfiguration> _options;
 
-
-        public Google()
+        public Google(IHttpClientFactory httpClientFactory, IOptions<GoogleConfiguration> options,
+            ILogger<Google> logging)
         {
-            _key = ConfigurationManager.AppSettings["GoogleApiKey"];
+            _httpClientFactory = httpClientFactory;
+            _options = options;
+            _logging = logging;
         }
 
 
@@ -41,7 +45,8 @@ namespace Credfeto.UrlShortener.Shorteners
             var post = "{\"longUrl\": \"" + url + "\"}";
             var request =
                 (HttpWebRequest)
-                WebRequest.Create(new Uri("https://www.googleapis.com/urlshortener/v1/url?key=" + _key));
+                WebRequest.Create(
+                    new Uri("https://www.googleapis.com/urlshortener/v1/url?key=" + _options.Value.ApiKey));
             try
             {
                 request.ServicePoint.Expect100Continue = false;
@@ -81,5 +86,11 @@ namespace Credfeto.UrlShortener.Shorteners
                 return url;
             }
         }
+    }
+
+    public sealed class GoogleConfiguration
+    {
+        public string ApiKey { get; set; }
+        public string Login { get; set; }
     }
 }
