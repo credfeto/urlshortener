@@ -6,6 +6,7 @@ using System.Text;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
@@ -69,6 +70,13 @@ namespace Credfeto.UrlShortener.Shorteners
 
                 return fullUrl;
             }
+        }
+
+        public static void Register(IServiceCollection serviceCollection)
+        {
+            serviceCollection.AddSingleton<IUrlShortener, Google>();
+
+            RegisterHttpClientFactory(serviceCollection: serviceCollection, userAgent: "Credfeto.UrlShortner.Google", clientName: HTTP_CLIENT_NAME, new Uri(uriString: @"https://www.googleapis.com"));
         }
 
         private sealed class Request
