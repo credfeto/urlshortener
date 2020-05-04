@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
-using System.Net;
 using System.Net.Http;
 using System.Text;
-using System.Text.RegularExpressions;
+using System.Text.Json;
+using System.Threading;
+using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
@@ -16,91 +17,69 @@ namespace Credfeto.UrlShortener.Shorteners
     /// <remarks>
     ///     Get free key from http://code.google.com/apis/console/ for up to 1000000 shortenings per day.
     /// </remarks>
-    public class Google : IUrlShortener
+    public sealed class Google : UrlShortenerBase, IUrlShortener
     {
-        private readonly IHttpClientFactory _httpClientFactory;
-        private readonly ILogger<Google> _logging;
+        private const string HTTP_CLIENT_NAME = @"Google";
+        private readonly JsonSerializerOptions _jsonSerializerOptions;
         private readonly IOptions<GoogleConfiguration> _options;
 
         public Google(IHttpClientFactory httpClientFactory, IOptions<GoogleConfiguration> options, ILogger<Google> logging)
+            : base(httpClientFactory: httpClientFactory, clientName: HTTP_CLIENT_NAME, logging: logging)
+
         {
-            this._httpClientFactory = httpClientFactory;
             this._options = options;
-            this._logging = logging;
+
+            this._jsonSerializerOptions = new JsonSerializerOptions {PropertyNameCaseInsensitive = false, PropertyNamingPolicy = JsonNamingPolicy.CamelCase};
         }
 
-        /// <summary>
-        ///     Shortens the given URL.
-        /// </summary>
-        /// <param name="fullUrl">
-        ///     The URL to shorten.
-        /// </param>
-        /// <returns>
-        ///     The shortened version of the URL.
-        /// </returns>
-        public Uri Shorten([NotNull] Uri fullUrl)
-        {
-            string post = "{\"longUrl\": \"" + fullUrl + "\"}";
-            HttpWebRequest request = (HttpWebRequest) WebRequest.Create(new Uri("https://www.googleapis.com/urlshortener/v1/url?key=" + this._options.Value.ApiKey));
+        /// <inheritdoc />
+        public string Name { get; }
 
+        /// <inheritdoc />
+        public async Task<Uri> ShortenAsync([NotNull] Uri fullUrl, CancellationToken cancellationToken)
+        {
             try
             {
-                request.ServicePoint.Expect100Continue = false;
-                request.Method = "POST";
-                request.ContentLength = post.Length;
-                request.ContentType = "application/json";
-                request.Headers.Add(name: "Cache-Control", value: "no-cache");
+                HttpClient client = this.CreateClient();
 
-                using (Stream requestStream = request.GetRequestStream())
-                {
-                    byte[] postBuffer = Encoding.ASCII.GetBytes(post);
-                    requestStream.Write(buffer: postBuffer, offset: 0, count: postBuffer.Length);
-                }
+                Uri uri = new Uri("https://www.googleapis.com/urlshortener/v1/url?key=" + this._options.Value.ApiKey);
 
-                using (HttpWebResponse response = (HttpWebResponse) request.GetResponse())
+                string requestJson = JsonSerializer.Serialize(new Request {LongUrl = fullUrl.ToString()}, options: this._jsonSerializerOptions);
+
+                using (StringContent requestContent = new StringContent(content: requestJson, encoding: Encoding.UTF8, mediaType: "application/json"))
                 {
-                    using (Stream responseStream = response.GetResponseStream())
+                    HttpResponseMessage response = await client.PutAsync(requestUri: uri, content: requestContent, cancellationToken: cancellationToken);
+
+                    if (!response.IsSuccessStatusCode)
                     {
-                        if (responseStream == null)
-                        {
-                            return fullUrl;
-                        }
+                        return fullUrl;
+                    }
 
-                        using (StreamReader responseReader = new StreamReader(responseStream))
-                        {
-                            string json = responseReader.ReadToEnd();
+                    using (Stream text = await response.Content.ReadAsStreamAsync())
+                    {
+                        Response responseModel = await JsonSerializer.DeserializeAsync<Response>(utf8Json: text, options: this._jsonSerializerOptions);
 
-                            if (string.IsNullOrEmpty(json))
-                            {
-                                return fullUrl;
-                            }
-
-                            string shortened = Regex.Match(input: json, pattern: @"""id"": ?""(?<id>.+)""")
-                                                    .Groups["id"]
-                                                    .Value;
-
-                            if (string.IsNullOrEmpty(shortened))
-                            {
-                                return fullUrl;
-                            }
-
-                            return new Uri(shortened);
-                        }
+                        return new Uri(responseModel.Id);
                     }
                 }
             }
-            catch (Exception)
+            catch (Exception exception)
             {
-                // if Google's URL Shortner is down...
+                this.Logging.LogError(new EventId(exception.HResult), exception: exception, $"Error: Could not build Short Url: {exception.Message}");
+
                 return fullUrl;
             }
         }
-    }
 
-    public sealed class GoogleConfiguration
-    {
-        public string ApiKey { get; set; }
+        private sealed class Request
+        {
+            public string LongUrl { get; set; }
+        }
 
-        public string Login { get; set; }
+        [SuppressMessage(category: "Microsoft.Performance", checkId: "CA1812:AvoidUninstantiatedInternalClasses", Justification = "Used by serialization")]
+        private sealed class Response
+        {
+            public string Id { get; set; }
+        }
     }
 }

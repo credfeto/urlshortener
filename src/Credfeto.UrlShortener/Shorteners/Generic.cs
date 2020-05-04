@@ -1,5 +1,6 @@
 ﻿using System;
-using System.Diagnostics.Contracts;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Credfeto.UrlShortener.Shorteners
 {
@@ -12,14 +13,15 @@ namespace Credfeto.UrlShortener.Shorteners
 
         public Generic(Func<Uri, Uri> shortener)
         {
-            Contract.Requires(shortener != null);
-            Contract.Ensures(shortener == this._shortener);
             this._shortener = shortener;
         }
 
-        public Uri Shorten(Uri fullUrl)
+        /// <inheritdoc />
+        public string Name { get; } = @"Generic";
+
+        public Task<Uri> ShortenAsync(Uri fullUrl, CancellationToken cancellationToken)
         {
-            return this._shortener(fullUrl);
+            return Task.FromResult(this._shortener(fullUrl));
         }
     }
 }

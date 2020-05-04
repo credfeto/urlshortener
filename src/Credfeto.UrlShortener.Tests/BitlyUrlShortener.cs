@@ -28,7 +28,7 @@ namespace Credfeto.UrlShortener.Tests
         {
             const string originalUrl = "http://www.markridgwell.co.uk/";
 
-            Uri shorterned = this._shortener.Shorten(new Uri(originalUrl));
+            Uri shorterned = this._shortener.ShortenAsync(new Uri(originalUrl));
             this._output.WriteLine(shorterned.ToString());
             Assert.NotEqual(expected: originalUrl, shorterned.ToString());
             Assert.True(shorterned.ToString()
