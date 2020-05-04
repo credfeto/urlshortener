@@ -1,0 +1,75 @@
+name: .NET Core
+
+on: [push]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v1
+    - name: Fetch tags and master
+      run: |
+          git fetch --tags
+          git branch --create-reflog master origin/master
+          echo REF: $GITHUB_REF
+          echo SHA: $GITHUB_SHA
+          echo ::set-env name=GIT_BRANCH::$GITHUB_REF
+    - name: Determine .net core version
+      run: |
+          echo .NET Core Version: `sed -n 's|.*"version":\s*"\([^"]*\)".*|\1|p' src/global.json`
+          echo ::set-env name=DOTNET_VERSION::`sed -n 's|.*"version":\s*"\([^"]*\)".*|\1|p' src/global.json`
+    - name: Generate build number
+      id: buildnumber
+      uses: einaregilsson/build-number@v2
+      with:
+        token: ${{secrets.github_token}}
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        dotnet-version: ${{ env.DOTNET_VERSION }}
+    - name: Install Build Version Tool
+      run: |
+        dotnet new tool-manifest
+        dotnet tool install --local FunFair.BuildVersion --add-source ${{ secrets.FUNFAIR_NUGET_FEED }}
+    - name: Set Define Build Version
+      run: dotnet buildversion  ${{ steps.buildnumber.outputs.build_number }} 
+    - name: Build with dotnet
+      run: |
+        cd src
+        dotnet build --configuration Release /p:Version=${{ env.BUILD_VERSION }}
+    - name: Test dotnet
+      run: |
+        cd src
+        dotnet test --configuration Release /p:Version=${{ env.BUILD_VERSION }} --no-build --no-restore
+#    - name: Pack ImageLoader.Interfaces
+#      run: |
+#         cd src
+#         dotnet pack Credfeto.ImageLoader.Interfaces --configuration Release -o dist /p:Version=${{ env.BUILD_VERSION }} --no-build --no-restore
+#    - name: Pack ImageLoader.Core
+#      run: |
+#         cd src
+#         dotnet pack Credfeto.ImageLoader.Core --configuration Release -o dist /p:Version=${{ env.BUILD_VERSION }} --no-build --no-restore
+#    - name: Pack ImageLoader.Standard
+#      run: |
+#         cd src
+#         dotnet pack Credfeto.ImageLoader.Standard --configuration Release -o dist /p:Version=${{ env.BUILD_VERSION }} --no-build --no-restore
+#    - name: Pack ImageLoader.Raw
+#      run: |
+#         cd src
+#         dotnet pack Credfeto.ImageLoader.Raw --configuration Release -o dist /p:Version=${{ env.BUILD_VERSION }} --no-build --no-restore
+#    - name: Pack ImageLoader.Photoshop
+#      run: |
+#         cd src
+#         dotnet pack Credfeto.ImageLoader.Photoshop --configuration Release -o dist /p:Version=${{ env.BUILD_VERSION }} --no-build --no-restore
+#    - name: Publish
+#      run: |
+#        cd src/dist
+#        dotnet nuget push Credfeto.ImageLoader.Interfaces.*.nupkg --api-key ${{ secrets.NUGET_API_KEY }} --source ${{ secrets.NUGET_FEED }}
+#        dotnet nuget push Credfeto.ImageLoader.Core.*.nupkg --api-key ${{ secrets.NUGET_API_KEY }} --source ${{ secrets.NUGET_FEED }}
+#        dotnet nuget push Credfeto.ImageLoader.Standard.*.nupkg --api-key ${{ secrets.NUGET_API_KEY }} --source ${{ secrets.NUGET_FEED }}
+#        dotnet nuget push Credfeto.ImageLoader.Raw.*.nupkg --api-key ${{ secrets.NUGET_API_KEY }} --source ${{ secrets.NUGET_FEED }}
+#        dotnet nuget push Credfeto.ImageLoader.Photoshop.*.nupkg --api-key ${{ secrets.NUGET_API_KEY }} --source ${{ secrets.NUGET_FEED }}
