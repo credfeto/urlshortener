@@ -8,7 +8,7 @@ namespace Credfeto.UrlShortener.Tests
     /// <summary>
     ///     The bitly url shortner tests.
     /// </summary>
-    public class BitlyUrlShortener
+    public sealed class BitlyUrlShortener
     {
         public BitlyUrlShortener(ITestOutputHelper output)
         {
