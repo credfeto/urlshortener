@@ -21,12 +21,12 @@ namespace Credfeto.UrlShortener.Shorteners
     public sealed class Bitly : UrlShortenerBase, IUrlShortener
     {
         private const string HTTP_CLIENT_NAME = @"Bitly";
-        private readonly IOptions<BitlyConfiguration> _options;
+        private readonly BitlyConfiguration _options;
 
         public Bitly(IHttpClientFactory httpClientFactory, IOptions<BitlyConfiguration> options, ILogger<Bitly> logging)
             : base(httpClientFactory: httpClientFactory, clientName: HTTP_CLIENT_NAME, logging: logging)
         {
-            this._options = options;
+            this._options = options?.Value ?? throw new ArgumentNullException(nameof(options));
         }
 
         /// <inheritdoc />
@@ -38,8 +38,8 @@ namespace Credfeto.UrlShortener.Shorteners
             string encodedUrl = HttpUtility.UrlEncode(fullUrl.ToString());
             Uri shortnerUrl = new Uri(string.Format(provider: CultureInfo.InvariantCulture,
                                                     format: "/v3/shorten?apiKey={0}&login={1}&format=txt&longurl={2}",
-                                                    arg0: this._options.Value.ApiKey,
-                                                    arg1: this._options.Value.Login,
+                                                    arg0: this._options.ApiKey,
+                                                    arg1: this._options.Login,
                                                     arg2: encodedUrl),
                                       uriKind: UriKind.Relative);
 

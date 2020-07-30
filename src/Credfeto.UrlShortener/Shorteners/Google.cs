@@ -22,13 +22,13 @@ namespace Credfeto.UrlShortener.Shorteners
     {
         private const string HTTP_CLIENT_NAME = @"Google";
         private readonly JsonSerializerOptions _jsonSerializerOptions;
-        private readonly IOptions<GoogleConfiguration> _options;
+        private readonly GoogleConfiguration _options;
 
         public Google(IHttpClientFactory httpClientFactory, IOptions<GoogleConfiguration> options, ILogger<Google> logging)
             : base(httpClientFactory: httpClientFactory, clientName: HTTP_CLIENT_NAME, logging: logging)
 
         {
-            this._options = options;
+            this._options = options?.Value ?? throw new ArgumentNullException(nameof(options));
 
             this._jsonSerializerOptions = new JsonSerializerOptions {PropertyNameCaseInsensitive = false, PropertyNamingPolicy = JsonNamingPolicy.CamelCase};
         }
@@ -43,7 +43,7 @@ namespace Credfeto.UrlShortener.Shorteners
             {
                 HttpClient client = this.CreateClient();
 
-                Uri uri = new Uri("https://www.googleapis.com/urlshortener/v1/url?key=" + this._options.Value.ApiKey);
+                Uri uri = new Uri("https://www.googleapis.com/urlshortener/v1/url?key=" + this._options.ApiKey);
 
                 string requestJson = JsonSerializer.Serialize(new Request {LongUrl = fullUrl.ToString()}, options: this._jsonSerializerOptions);
 
