@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
+using System.Net;
 using System.Net.Http;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Credfeto.UrlShortener.Shorteners;
@@ -14,20 +17,30 @@ namespace Credfeto.UrlShortener.Tests
     /// <summary>
     ///     The google url shortner tests.
     /// </summary>
-    public class GoogleUrlShortenerTests
+    public class GoogleUrlShortenerTests : TestBase
     {
         public GoogleUrlShortenerTests(ITestOutputHelper output)
         {
-            IHttpClientFactory httpClientFactory = Substitute.For<IHttpClientFactory>();
+            this._httpClientFactory = Substitute.For<IHttpClientFactory>();
             IOptions<GoogleConfiguration> options = Substitute.For<IOptions<GoogleConfiguration>>();
             options.Value.Returns(new GoogleConfiguration {ApiKey = "Mock"});
             this._output = output;
-            this._shortener = new Google(httpClientFactory: httpClientFactory, options: options, Substitute.For<ILogger<Google>>());
+            this._shortener = new Google(httpClientFactory: this._httpClientFactory, options: options, Substitute.For<ILogger<Google>>());
         }
 
         private readonly ITestOutputHelper _output;
 
+        private readonly IHttpClientFactory _httpClientFactory;
         private readonly IUrlShortener _shortener;
+
+        [SuppressMessage(category: "Reliability", checkId: "CA2000:Dispose objects before losing scope", Justification = "For unit tests caller to dispose")]
+        private void MockConnection()
+        {
+            this._httpClientFactory.CreateClient("Google")
+                .Returns(Create(httpStatusCode: HttpStatusCode.OK,
+                                new {Id = "https://goo.gl/fake"},
+                                new JsonSerializerOptions {DictionaryKeyPolicy = JsonNamingPolicy.CamelCase, PropertyNamingPolicy = JsonNamingPolicy.CamelCase}));
+        }
 
         /// <summary>
         ///     The can shorten.
@@ -35,15 +48,17 @@ namespace Credfeto.UrlShortener.Tests
         [Fact]
         public async Task CanShortenAsync()
         {
-            const string originalUrl = "http://www.markridgwell.co.uk/";
+            this.MockConnection();
+
+            const string originalUrl = "https://www.markridgwell.co.uk/";
 
             Uri shorterned = await this._shortener.ShortenAsync(new Uri(originalUrl), cancellationToken: CancellationToken.None);
             this._output.WriteLine(shorterned.ToString());
             Assert.NotEqual(expected: originalUrl, shorterned.ToString());
-            Assert.StartsWith(shorterned.ToString(), actualString: "http://goo.gl/", comparisonType: StringComparison.OrdinalIgnoreCase);
+            Assert.StartsWith(expectedStartString: "https://goo.gl/", shorterned.ToString(), comparisonType: StringComparison.OrdinalIgnoreCase);
             Assert.True(shorterned.ToString()
                                   .Length <= originalUrl.Length);
-            Assert.Equal(expected: "http://goo.gl/M0LEn", shorterned.ToString());
+            Assert.Equal(expected: "https://goo.gl/fake", shorterned.ToString());
         }
     }
 }
