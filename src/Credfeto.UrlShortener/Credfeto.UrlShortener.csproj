@@ -8,7 +8,7 @@
     <Features>strict;flow-analysis</Features>
     <PackAsTool>false</PackAsTool>
     <IsPackable>true</IsPackable>
-    <Nullable>disable</Nullable>
+    <Nullable>enable</Nullable>
   </PropertyGroup>
   <PropertyGroup>
     <Company>Mark Ridgwell</Company>

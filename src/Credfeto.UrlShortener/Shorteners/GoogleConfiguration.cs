@@ -1,7 +1,13 @@
 namespace Credfeto.UrlShortener.Shorteners
 {
+    /// <summary>
+    ///     The Google url shortener configuration
+    /// </summary>
     public sealed class GoogleConfiguration
     {
-        public string ApiKey { get; set; }
+        /// <summary>
+        ///     The Api key.
+        /// </summary>
+        public string ApiKey { get; set; } = default!;
     }
 }

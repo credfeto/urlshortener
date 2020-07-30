@@ -1,13 +1,4 @@
-﻿using System;
-using System.Net.Http;
-using System.Threading;
-using System.Threading.Tasks;
-using Credfeto.UrlShortener.Shorteners;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
-using NSubstitute;
-using Xunit;
-using Xunit.Abstractions;
+﻿using Credfeto.UrlShortener.Shorteners;
 
 namespace Credfeto.UrlShortener.Tests
 {
@@ -16,17 +7,18 @@ namespace Credfeto.UrlShortener.Tests
     /// </summary>
     public class GoogleUrlShortener
     {
+        private readonly ITestOutputHelper _output;
+
+        private readonly IUrlShortener _shortener;
+
         public GoogleUrlShortener(ITestOutputHelper output)
         {
             IHttpClientFactory httpClientFactory = Substitute.For<IHttpClientFactory>();
             IOptions<GoogleConfiguration> options = Substitute.For<IOptions<GoogleConfiguration>>();
+            options.Value.Returns(new GoogleConfiguration {ApiKey = "Mock"});
             this._output = output;
             this._shortener = new Google(httpClientFactory: httpClientFactory, options: options, Substitute.For<ILogger<Google>>());
         }
-
-        private readonly ITestOutputHelper _output;
-
-        private readonly IUrlShortener _shortener;
 
         /// <summary>
         ///     The can shorten.

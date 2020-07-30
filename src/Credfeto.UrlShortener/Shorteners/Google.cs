@@ -34,7 +34,7 @@ namespace Credfeto.UrlShortener.Shorteners
         }
 
         /// <inheritdoc />
-        public string Name { get; }
+        public string Name { get; } = HTTP_CLIENT_NAME;
 
         /// <inheritdoc />
         public async Task<Uri> ShortenAsync([NotNull] Uri fullUrl, CancellationToken cancellationToken)
@@ -60,16 +60,19 @@ namespace Credfeto.UrlShortener.Shorteners
                     {
                         Response responseModel = await JsonSerializer.DeserializeAsync<Response>(utf8Json: text, options: this._jsonSerializerOptions);
 
-                        return new Uri(responseModel.Id);
+                        if (responseModel.Id != null)
+                        {
+                            return new Uri(responseModel.Id);
+                        }
                     }
                 }
             }
             catch (Exception exception)
             {
                 this.Logging.LogError(new EventId(exception.HResult), exception: exception, $"Error: Could not build Short Url: {exception.Message}");
-
-                return fullUrl;
             }
+
+            return fullUrl;
         }
 
         public static void Register(IServiceCollection serviceCollection)
@@ -81,13 +84,13 @@ namespace Credfeto.UrlShortener.Shorteners
 
         private sealed class Request
         {
-            public string LongUrl { get; set; }
+            public string? LongUrl { get; set; }
         }
 
         [SuppressMessage(category: "Microsoft.Performance", checkId: "CA1812:AvoidUninstantiatedInternalClasses", Justification = "Used by serialization")]
         private sealed class Response
         {
-            public string Id { get; set; }
+            public string? Id { get; set; }
         }
     }
 }
