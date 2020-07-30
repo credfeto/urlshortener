@@ -48,15 +48,15 @@ namespace Credfeto.UrlShortener.Tests
         {
             this.MockConnection();
 
-            const string originalUrl = "http://www.markridgwell.co.uk/";
+            const string originalUrl = "https://www.markridgwell.co.uk/";
 
             Uri shorterned = await this._shortener.ShortenAsync(new Uri(originalUrl), cancellationToken: CancellationToken.None);
             this._output.WriteLine(shorterned.ToString());
             Assert.NotEqual(expected: originalUrl, shorterned.ToString());
-            Assert.StartsWith(shorterned.ToString(), actualString: "http://bit.ly/", comparisonType: StringComparison.OrdinalIgnoreCase);
+            Assert.StartsWith(expectedStartString: "https://bit.ly/", shorterned.ToString(), comparisonType: StringComparison.OrdinalIgnoreCase);
             Assert.True(shorterned.ToString()
                                   .Length <= originalUrl.Length);
-            Assert.Equal(expected: "http://bit.ly/13b70Jk", shorterned.ToString());
+            Assert.Equal(expected: "https://bit.ly/fake", shorterned.ToString());
         }
     }
 }
