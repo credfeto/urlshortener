@@ -43,31 +43,11 @@ jobs:
       run: |
         cd src
         dotnet test --configuration Release /p:Version=${{ env.BUILD_VERSION }} --no-build --no-restore
-#    - name: Pack ImageLoader.Interfaces
-#      run: |
-#         cd src
-#         dotnet pack Credfeto.ImageLoader.Interfaces --configuration Release -o dist /p:Version=${{ env.BUILD_VERSION }} --no-build --no-restore
-#    - name: Pack ImageLoader.Core
-#      run: |
-#         cd src
-#         dotnet pack Credfeto.ImageLoader.Core --configuration Release -o dist /p:Version=${{ env.BUILD_VERSION }} --no-build --no-restore
-#    - name: Pack ImageLoader.Standard
-#      run: |
-#         cd src
-#         dotnet pack Credfeto.ImageLoader.Standard --configuration Release -o dist /p:Version=${{ env.BUILD_VERSION }} --no-build --no-restore
-#    - name: Pack ImageLoader.Raw
-#      run: |
-#         cd src
-#         dotnet pack Credfeto.ImageLoader.Raw --configuration Release -o dist /p:Version=${{ env.BUILD_VERSION }} --no-build --no-restore
-#    - name: Pack ImageLoader.Photoshop
-#      run: |
-#         cd src
-#         dotnet pack Credfeto.ImageLoader.Photoshop --configuration Release -o dist /p:Version=${{ env.BUILD_VERSION }} --no-build --no-restore
-#    - name: Publish
-#      run: |
-#        cd src/dist
-#        dotnet nuget push Credfeto.ImageLoader.Interfaces.*.nupkg --api-key ${{ secrets.NUGET_API_KEY }} --source ${{ secrets.NUGET_FEED }}
-#        dotnet nuget push Credfeto.ImageLoader.Core.*.nupkg --api-key ${{ secrets.NUGET_API_KEY }} --source ${{ secrets.NUGET_FEED }}
-#        dotnet nuget push Credfeto.ImageLoader.Standard.*.nupkg --api-key ${{ secrets.NUGET_API_KEY }} --source ${{ secrets.NUGET_FEED }}
-#        dotnet nuget push Credfeto.ImageLoader.Raw.*.nupkg --api-key ${{ secrets.NUGET_API_KEY }} --source ${{ secrets.NUGET_FEED }}
-#        dotnet nuget push Credfeto.ImageLoader.Photoshop.*.nupkg --api-key ${{ secrets.NUGET_API_KEY }} --source ${{ secrets.NUGET_FEED }}
+    - name: Pack Credfeto.UrlShorteners
+      run: |
+         cd src
+         dotnet pack Credfeto.UrlShortener --configuration Release -o dist /p:Version=${{ env.BUILD_VERSION }} --no-build --no-restore
+    - name: Publish
+      run: |
+        cd src/dist
+        dotnet nuget push Credfeto.UrlShortener.*.nupkg --api-key ${{ secrets.NUGET_API_KEY }} --source ${{ secrets.NUGET_FEED }}
