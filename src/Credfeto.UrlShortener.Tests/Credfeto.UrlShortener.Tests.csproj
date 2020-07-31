@@ -1,47 +1,47 @@
 <Project Sdk="Microsoft.NET.Sdk">
-    <PropertyGroup>
-        <TargetFramework>netcoreapp3.1</TargetFramework>
-        <LangVersion>latest</LangVersion>
-        <DisableImplicitNuGetFallbackFolder>true</DisableImplicitNuGetFallbackFolder>
-        <WarningsAsErrors/>
-        <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
-        <Features>strict;flow-analysis</Features>
-        <PackAsTool>false</PackAsTool>
-        <IsPackable>true</IsPackable>
-        <Nullable>enable</Nullable>
-    </PropertyGroup>
-    <PropertyGroup>
-        <Company>Mark Ridgwell</Company>
-        <Copyright>Mark Ridgwell</Copyright>
-        <Product>Url Shortener</Product>
-        <PackageLicense>https://raw.githubusercontent.com/credfeto/urlshortener/master/LICENSE</PackageLicense>
-        <NeutralLanguage>en-GB</NeutralLanguage>
-    </PropertyGroup>
-    <PropertyGroup>
-        <AssemblyTitle>UrlShortener</AssemblyTitle>
-        <Description>Url Shortening</Description>
-    </PropertyGroup>
-    <PropertyGroup>
-        <CodeAnalysisRuleSet>$(SolutionDir)\CodeAnalysis.ruleset</CodeAnalysisRuleSet>
-    </PropertyGroup>
-    <ItemGroup>
-        <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="3.1.6"/>
-        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.6.1"/>
-        <PackageReference Include="NSubstitute" Version="4.2.2"/>
-        <PackageReference Include="xunit" Version="2.4.1"/>
-        <PackageReference Include="xunit.runner.visualstudio" Version="2.4.2"/>
-        <DotNetCliToolReference Include="dotnet-xunit" Version="2.3.1"/>
-    </ItemGroup>
-    <ItemGroup>
-        <PackageReference Include="AsyncFixer" Version="1.3.0" PrivateAssets="All"/>
-        <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="3.0.0" PrivateAssets="All"/>
-        <PackageReference Include="Microsoft.VisualStudio.Threading.Analyzers" Version="16.6.13" PrivateAssets="All"/>
-        <PackageReference Include="NSubstitute.Analyzers.CSharp" Version="1.0.13" PrivateAssets="All"/>
-        <PackageReference Include="SonarAnalyzer.CSharp" Version="8.10.0.19839" PrivateAssets="All"/>
-        <PackageReference Include="Roslynator.Analyzers" Version="2.3.0" PrivateAssets="All"/>
-        <PackageReference Include="SourceLink.Create.CommandLine" Version="2.8.3" PrivateAssets="All"/>
-    </ItemGroup>
-    <ItemGroup>
-        <ProjectReference Include="..\Credfeto.UrlShortener\Credfeto.UrlShortener.csproj"/>
-    </ItemGroup>
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <LangVersion>latest</LangVersion>
+    <DisableImplicitNuGetFallbackFolder>true</DisableImplicitNuGetFallbackFolder>
+    <WarningsAsErrors />
+    <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
+    <Features>strict;flow-analysis</Features>
+    <PackAsTool>false</PackAsTool>
+    <IsPackable>true</IsPackable>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+  <PropertyGroup>
+    <Company>Mark Ridgwell</Company>
+    <Copyright>Mark Ridgwell</Copyright>
+    <Product>Url Shortener</Product>
+    <PackageLicense>https://raw.githubusercontent.com/credfeto/urlshortener/master/LICENSE</PackageLicense>
+    <NeutralLanguage>en-GB</NeutralLanguage>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyTitle>UrlShortener</AssemblyTitle>
+    <Description>Url Shortening</Description>
+  </PropertyGroup>
+  <PropertyGroup>
+    <CodeAnalysisRuleSet>$(SolutionDir)\CodeAnalysis.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="3.1.6" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.6.1" />
+    <PackageReference Include="NSubstitute" Version="4.2.2" />
+    <PackageReference Include="xunit" Version="2.4.1" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.4.2" />
+    <DotNetCliToolReference Include="dotnet-xunit" Version="2.3.1" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="AsyncFixer" Version="1.3.0" PrivateAssets="All" />
+    <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="3.0.0" PrivateAssets="All" />
+    <PackageReference Include="Microsoft.VisualStudio.Threading.Analyzers" Version="16.7.54" PrivateAssets="All" />
+    <PackageReference Include="NSubstitute.Analyzers.CSharp" Version="1.0.13" PrivateAssets="All" />
+    <PackageReference Include="SonarAnalyzer.CSharp" Version="8.10.0.19839" PrivateAssets="All" />
+    <PackageReference Include="Roslynator.Analyzers" Version="2.3.0" PrivateAssets="All" />
+    <PackageReference Include="SourceLink.Create.CommandLine" Version="2.8.3" PrivateAssets="All" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Credfeto.UrlShortener\Credfeto.UrlShortener.csproj" />
+  </ItemGroup>
 </Project>
