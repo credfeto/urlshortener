@@ -26,7 +26,7 @@ namespace Credfeto.UrlShortener.Shorteners
         public Bitly(IHttpClientFactory httpClientFactory, IOptions<BitlyConfiguration> options, ILogger<Bitly> logging)
             : base(httpClientFactory: httpClientFactory, clientName: HTTP_CLIENT_NAME, logging: logging)
         {
-            this._options = options?.Value ?? throw new ArgumentNullException(nameof(options));
+            this._options = options.Value ?? throw new ArgumentNullException(nameof(options));
         }
 
         /// <inheritdoc />
