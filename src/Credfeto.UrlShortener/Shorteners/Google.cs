@@ -28,7 +28,7 @@ namespace Credfeto.UrlShortener.Shorteners
             : base(httpClientFactory: httpClientFactory, clientName: HTTP_CLIENT_NAME, logging: logging)
 
         {
-            this._options = options?.Value ?? throw new ArgumentNullException(nameof(options));
+            this._options = options.Value ?? throw new ArgumentNullException(nameof(options));
 
             this._jsonSerializerOptions = new JsonSerializerOptions {PropertyNameCaseInsensitive = false, PropertyNamingPolicy = JsonNamingPolicy.CamelCase};
         }
@@ -56,9 +56,9 @@ namespace Credfeto.UrlShortener.Shorteners
                         return fullUrl;
                     }
 
-                    using (Stream text = await response.Content.ReadAsStreamAsync())
+                    await using (Stream text = await response.Content.ReadAsStreamAsync())
                     {
-                        Response responseModel = await JsonSerializer.DeserializeAsync<Response>(utf8Json: text, options: this._jsonSerializerOptions);
+                        Response responseModel = await JsonSerializer.DeserializeAsync<Response>(utf8Json: text, options: this._jsonSerializerOptions, cancellationToken);
 
                         if (responseModel.Id != null)
                         {
