@@ -1,4 +1,4 @@
-# Changelog
+﻿# Changelog
 All notable changes to this project will be documented in this file.
 
 <!--
@@ -30,6 +30,7 @@ Please ADD ALL Changes to the UNRELASED SECTION and not a specific release
 - FF-1429 - Updated Microsoft.NET.Test.Sdk to 16.7.0
 - FF-1429 - Updated xunit.runner.visualstudio to 2.4.3
 - FF-1429 - Updated Microsoft.VisualStudio.Threading.Analyzers to 16.7.54
+- FF-1429 - Updated SonarAnalyzer.CSharp to 8.15.0.24505
 ### Removed
 ### Deployment Changes
 
