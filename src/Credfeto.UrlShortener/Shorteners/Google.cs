@@ -43,11 +43,11 @@ namespace Credfeto.UrlShortener.Shorteners
             {
                 HttpClient client = this.CreateClient();
 
-                Uri uri = new Uri("https://www.googleapis.com/urlshortener/v1/url?key=" + this._options.ApiKey);
+                Uri uri = new("https://www.googleapis.com/urlshortener/v1/url?key=" + this._options.ApiKey);
 
                 string requestJson = JsonSerializer.Serialize(new Request {LongUrl = fullUrl.ToString()}, options: this._jsonSerializerOptions);
 
-                using (StringContent requestContent = new StringContent(content: requestJson, encoding: Encoding.UTF8, mediaType: "application/json"))
+                using (StringContent requestContent = new(content: requestJson, encoding: Encoding.UTF8, mediaType: "application/json"))
                 {
                     HttpResponseMessage response = await client.PutAsync(requestUri: uri, content: requestContent, cancellationToken: cancellationToken);
 
@@ -56,11 +56,11 @@ namespace Credfeto.UrlShortener.Shorteners
                         return fullUrl;
                     }
 
-                    await using (Stream text = await response.Content.ReadAsStreamAsync())
+                    await using (Stream text = await response.Content.ReadAsStreamAsync(cancellationToken))
                     {
-                        Response responseModel = await JsonSerializer.DeserializeAsync<Response>(utf8Json: text, options: this._jsonSerializerOptions, cancellationToken);
+                        Response? responseModel = await JsonSerializer.DeserializeAsync<Response>(utf8Json: text, options: this._jsonSerializerOptions, cancellationToken: cancellationToken);
 
-                        if (responseModel.Id != null)
+                        if (responseModel?.Id != null)
                         {
                             return new Uri(responseModel.Id);
                         }

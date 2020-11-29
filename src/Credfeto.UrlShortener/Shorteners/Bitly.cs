@@ -36,12 +36,12 @@ namespace Credfeto.UrlShortener.Shorteners
         public async Task<Uri> ShortenAsync(Uri fullUrl, CancellationToken cancellationToken)
         {
             string encodedUrl = HttpUtility.UrlEncode(fullUrl.ToString());
-            Uri shortnerUrl = new Uri(string.Format(provider: CultureInfo.InvariantCulture,
-                                                    format: "/v3/shorten?apiKey={0}&login={1}&format=txt&longurl={2}",
-                                                    arg0: this._options.ApiKey,
-                                                    arg1: this._options.Login,
-                                                    arg2: encodedUrl),
-                                      uriKind: UriKind.Relative);
+            Uri shortnerUrl = new(string.Format(provider: CultureInfo.InvariantCulture,
+                                                format: "/v3/shorten?apiKey={0}&login={1}&format=txt&longurl={2}",
+                                                arg0: this._options.ApiKey,
+                                                arg1: this._options.Login,
+                                                arg2: encodedUrl),
+                                  uriKind: UriKind.Relative);
 
             try
             {
@@ -54,7 +54,7 @@ namespace Credfeto.UrlShortener.Shorteners
                     return fullUrl;
                 }
 
-                string shortened = await response.Content.ReadAsStringAsync();
+                string shortened = await response.Content.ReadAsStringAsync(cancellationToken);
 
                 return string.IsNullOrEmpty(shortened) ? fullUrl : new Uri(shortened);
             }
