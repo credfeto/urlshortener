@@ -20,7 +20,7 @@ jobs:
       uses: credfeto/action-dotnet-version-detect@v1.1.1
     - name: Generate build number
       id: buildnumber
-      uses: einaregilsson/build-number@v2
+      uses: einaregilsson/build-number@v3
       with:
         token: ${{secrets.github_token}}
     - name: Setup .NET Core
