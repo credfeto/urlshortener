@@ -7,7 +7,7 @@
     <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
     <Features>strict;flow-analysis</Features>
     <PackAsTool>false</PackAsTool>
-    <IsPackable>true</IsPackable>
+    <IsPackable>false</IsPackable>
     <Nullable>enable</Nullable>
   </PropertyGroup>
   <PropertyGroup>
