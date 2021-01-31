@@ -11,7 +11,7 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
   <PropertyGroup>
-    <Author>Mark Ridgwell</Author>
+    <Authors>Mark Ridgwell</Authors>
     <Company>Mark Ridgwell</Company>
     <Copyright>Mark Ridgwell</Copyright>
     <Product>Url Shortener</Product>
