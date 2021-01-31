@@ -16,6 +16,7 @@
     <Product>Url Shortener</Product>
     <PackageLicense>https://raw.githubusercontent.com/credfeto/urlshortener/master/LICENSE</PackageLicense>
     <NeutralLanguage>en-GB</NeutralLanguage>
+    <PackageReleaseNotes>$(ReleaseNotes)</PackageReleaseNotes>
   </PropertyGroup>
   <PropertyGroup>
     <AssemblyTitle>UrlShortener</AssemblyTitle>

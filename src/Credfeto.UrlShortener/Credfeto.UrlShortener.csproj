@@ -11,11 +11,15 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
   <PropertyGroup>
+    <Author>Mark Ridgwell</Author>
     <Company>Mark Ridgwell</Company>
     <Copyright>Mark Ridgwell</Copyright>
     <Product>Url Shortener</Product>
-    <PackageLicense>https://raw.githubusercontent.com/credfeto/urlshortener/master/LICENSE</PackageLicense>
+    <PackageTags>Url, Shortener, bit.ly</PackageTags>
+    <RepositoryUrl>https://github.com/credfeto/urlshortener</RepositoryUrl>
     <NeutralLanguage>en-GB</NeutralLanguage>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageReleaseNotes>$(ReleaseNotes)</PackageReleaseNotes>
   </PropertyGroup>
   <PropertyGroup>
     <AssemblyTitle>UrlShortener</AssemblyTitle>
