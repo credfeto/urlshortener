@@ -16,7 +16,8 @@ namespace Credfeto.UrlShortener.Shorteners
     /// </summary>
     /// <remarks>
     ///     Get free key from https://bitly.com/a/your_api_key for up to 1000000 shortenings per day.
-    /// </remarks>    [SuppressMessage(category: "Microsoft.Naming", checkId: "CA1704:IdentifiersShouldBeSpelledCorrectly", Justification = "Bitly is name of site.")]
+    /// </remarks>
+    [SuppressMessage(category: "Microsoft.Naming", checkId: "CA1704:IdentifiersShouldBeSpelledCorrectly", Justification = "Bitly is name of site.")]
     public sealed class Bitly : UrlShortenerBase, IUrlShortener
     {
         private const string HTTP_CLIENT_NAME = @"Bitly";
@@ -35,18 +36,18 @@ namespace Credfeto.UrlShortener.Shorteners
         public async Task<Uri> ShortenAsync(Uri fullUrl, CancellationToken cancellationToken)
         {
             string encodedUrl = HttpUtility.UrlEncode(fullUrl.ToString());
-            Uri shortnerUrl = new(string.Format(provider: CultureInfo.InvariantCulture,
-                                                format: "/v3/shorten?apiKey={0}&login={1}&format=txt&longurl={2}",
-                                                arg0: this._options.ApiKey,
-                                                arg1: this._options.Login,
-                                                arg2: encodedUrl),
-                                  uriKind: UriKind.Relative);
+            Uri shortUrl = new(string.Format(provider: CultureInfo.InvariantCulture,
+                                             format: "/v3/shorten?apiKey={0}&login={1}&format=txt&longurl={2}",
+                                             arg0: this._options.ApiKey,
+                                             arg1: this._options.Login,
+                                             arg2: encodedUrl),
+                               uriKind: UriKind.Relative);
 
             try
             {
                 HttpClient client = this.CreateClient();
 
-                HttpResponseMessage response = await client.GetAsync(requestUri: shortnerUrl, cancellationToken: cancellationToken);
+                HttpResponseMessage response = await client.GetAsync(requestUri: shortUrl, cancellationToken: cancellationToken);
 
                 if (!response.IsSuccessStatusCode)
                 {
