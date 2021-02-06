@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Net.Http;
@@ -36,18 +36,18 @@ namespace Credfeto.UrlShortener.Shorteners
         public async Task<Uri> ShortenAsync(Uri fullUrl, CancellationToken cancellationToken)
         {
             string encodedUrl = HttpUtility.UrlEncode(fullUrl.ToString());
-            Uri shortnerUrl = new(string.Format(provider: CultureInfo.InvariantCulture,
-                                                format: "/v3/shorten?apiKey={0}&login={1}&format=txt&longurl={2}",
-                                                arg0: this._options.ApiKey,
-                                                arg1: this._options.Login,
-                                                arg2: encodedUrl),
-                                  uriKind: UriKind.Relative);
+            Uri shortUrl = new(string.Format(provider: CultureInfo.InvariantCulture,
+                                             format: "/v3/shorten?apiKey={0}&login={1}&format=txt&longurl={2}",
+                                             arg0: this._options.ApiKey,
+                                             arg1: this._options.Login,
+                                             arg2: encodedUrl),
+                               uriKind: UriKind.Relative);
 
             try
             {
                 HttpClient client = this.CreateClient();
 
-                HttpResponseMessage response = await client.GetAsync(requestUri: shortnerUrl, cancellationToken: cancellationToken);
+                HttpResponseMessage response = await client.GetAsync(requestUri: shortUrl, cancellationToken: cancellationToken);
 
                 if (!response.IsSuccessStatusCode)
                 {
