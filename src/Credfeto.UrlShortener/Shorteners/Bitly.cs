@@ -17,7 +17,6 @@ namespace Credfeto.UrlShortener.Shorteners
     /// <remarks>
     ///     Get free key from https://bitly.com/a/your_api_key for up to 1000000 shortenings per day.
     /// </remarks>
-
     [SuppressMessage(category: "Microsoft.Naming", checkId: "CA1704:IdentifiersShouldBeSpelledCorrectly", Justification = "Bitly is name of site.")]
     public sealed class Bitly : UrlShortenerBase, IUrlShortener
     {
@@ -67,6 +66,10 @@ namespace Credfeto.UrlShortener.Shorteners
             }
         }
 
+        /// <summary>
+        ///     Register's the bitly url shortnener
+        /// </summary>
+        /// <param name="serviceCollection"></param>
         public static void Register(IServiceCollection serviceCollection)
         {
             serviceCollection.AddSingleton<IUrlShortener, Bitly>();
