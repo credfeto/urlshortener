@@ -66,6 +66,10 @@ namespace Credfeto.UrlShortener.Shorteners
             }
         }
 
+        /// <summary>
+        ///     Register's the bitly url shortnener
+        /// </summary>
+        /// <param name="serviceCollection"></param>
         public static void Register(IServiceCollection serviceCollection)
         {
             serviceCollection.AddSingleton<IUrlShortener, Bitly>();
