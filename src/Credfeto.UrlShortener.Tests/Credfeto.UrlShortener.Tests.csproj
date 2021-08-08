@@ -32,9 +32,6 @@
     <CodeAnalysisRuleSet>$(SolutionDir)\CodeAnalysis.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
-    <DotNetCliToolReference Include="dotnet-xunit" Version="2.3.1" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\Credfeto.UrlShortener\Credfeto.UrlShortener.csproj" />
   </ItemGroup>
   <ItemGroup>
