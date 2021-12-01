@@ -9,6 +9,7 @@ Please ADD ALL Changes to the UNRELASED SECTION and not a specific release
 ### Added
 - CodeCracker analyis
 - SmartAnalyzers.CSharpExtensions.Annotations analyis
+- Added Meziantou analyzer
 ### Fixed
 ### Changed
 ### Removed
