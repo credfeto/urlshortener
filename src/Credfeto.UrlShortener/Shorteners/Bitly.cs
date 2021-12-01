@@ -20,7 +20,7 @@ namespace Credfeto.UrlShortener.Shorteners
     [SuppressMessage(category: "Microsoft.Naming", checkId: "CA1704:IdentifiersShouldBeSpelledCorrectly", Justification = "Bitly is name of site.")]
     public sealed class Bitly : UrlShortenerBase, IUrlShortener
     {
-        private const string HTTP_CLIENT_NAME = @"Bitly";
+        private const string HTTP_CLIENT_NAME = nameof(Bitly);
         private readonly BitlyConfiguration _options;
 
         public Bitly(IHttpClientFactory httpClientFactory, IOptions<BitlyConfiguration> options, ILogger<Bitly> logging)
@@ -30,7 +30,7 @@ namespace Credfeto.UrlShortener.Shorteners
         }
 
         /// <inheritdoc />
-        public string Name { get; } = @"Bitly";
+        public string Name { get; } = nameof(Bitly);
 
         /// <inheritdoc />
         public async Task<Uri> ShortenAsync(Uri fullUrl, CancellationToken cancellationToken)

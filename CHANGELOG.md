@@ -7,6 +7,8 @@ Please ADD ALL Changes to the UNRELASED SECTION and not a specific release
 
 ## [Unreleased]
 ### Added
+- CodeCracker analyis
+- SmartAnalyzers.CSharpExtensions.Annotations analyis
 ### Fixed
 ### Changed
 ### Removed

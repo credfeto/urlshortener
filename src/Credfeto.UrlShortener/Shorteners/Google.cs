@@ -20,7 +20,7 @@ namespace Credfeto.UrlShortener.Shorteners
     /// </remarks>
     public sealed class Google : UrlShortenerBase, IUrlShortener
     {
-        private const string HTTP_CLIENT_NAME = @"Google";
+        private const string HTTP_CLIENT_NAME = nameof(Google);
         private readonly JsonSerializerOptions _jsonSerializerOptions;
         private readonly GoogleConfiguration _options;
 

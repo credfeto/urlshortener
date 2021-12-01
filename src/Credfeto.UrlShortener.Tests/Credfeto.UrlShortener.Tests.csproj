@@ -15,9 +15,9 @@
     <OutputType>Library</OutputType>
     <TargetFramework>net6.0</TargetFramework>
     <TieredCompilation>true</TieredCompilation>
-    <TreatSpecificWarningsAsErrors/>
+    <TreatSpecificWarningsAsErrors />
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-    <WarningsAsErrors/>
+    <WarningsAsErrors />
   </PropertyGroup>
   <PropertyGroup>
     <Company>Mark Ridgwell</Company>
@@ -40,20 +40,22 @@
     <CodeAnalysisRuleSet>$(SolutionDir)\CodeAnalysis.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Credfeto.UrlShortener\Credfeto.UrlShortener.csproj"/>
+    <ProjectReference Include="..\Credfeto.UrlShortener\Credfeto.UrlShortener.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.0.0"/>
-    <PackageReference Include="NSubstitute" Version="4.2.2"/>
-    <PackageReference Include="xunit" Version="2.4.1"/>
-    <PackageReference Include="xunit.runner.visualstudio" Version="2.4.3"/>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.0.0" />
+    <PackageReference Include="NSubstitute" Version="4.2.2" />
+    <PackageReference Include="xunit" Version="2.4.1" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.4.3" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="AsyncFixer" Version="1.5.1" PrivateAssets="All"/>
-    <PackageReference Include="Microsoft.VisualStudio.Threading.Analyzers" Version="17.0.64" PrivateAssets="All"/>
-    <PackageReference Include="NSubstitute.Analyzers.CSharp" Version="1.0.15" PrivateAssets="All"/>
-    <PackageReference Include="Roslynator.Analyzers" Version="3.3.0" PrivateAssets="All"/>
-    <PackageReference Include="SonarAnalyzer.CSharp" Version="8.32.0.39516" PrivateAssets="All"/>
-    <PackageReference Include="SourceLink.Create.CommandLine" Version="2.8.3" PrivateAssets="All"/>
+    <PackageReference Include="AsyncFixer" Version="1.5.1" PrivateAssets="All" />
+    <PackageReference Include="codecracker.CSharp" Version="1.1.0" PrivateAssets="All" />
+    <PackageReference Include="Microsoft.VisualStudio.Threading.Analyzers" Version="17.0.64" PrivateAssets="All" />
+    <PackageReference Include="NSubstitute.Analyzers.CSharp" Version="1.0.15" PrivateAssets="All" />
+    <PackageReference Include="Roslynator.Analyzers" Version="3.3.0" PrivateAssets="All" />
+    <PackageReference Include="SonarAnalyzer.CSharp" Version="8.32.0.39516" PrivateAssets="All" />
+    <PackageReference Include="SmartAnalyzers.CSharpExtensions.Annotations" Version="1.1.10" PrivateAssets="All" />
+    <PackageReference Include="SourceLink.Create.CommandLine" Version="2.8.3" PrivateAssets="All" />
   </ItemGroup>
 </Project>

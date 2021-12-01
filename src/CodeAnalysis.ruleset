@@ -414,6 +414,10 @@
         <!-- RCS1197 - OptimizeStringBuilderAppendCall -->
         <Rule Id="RCS1197" Action="Error"/>
     </Rules>
+    <Rules AnalyzerId="codecracker.CSharp" RuleNamespace="codecracker.CSharp">
+        <!-- CC0001 - Use var instead of specifying type name -->
+        <Rule Id="CC0001" Action="None"/>
+    </Rules>
     <Rules AnalyzerId="FunFair.CodeAnalysis" RuleNamespace="FunFair.CodeAnalysis">
         <!-- FFS0001 - Avoid using DateTime.Now - Use IDateTimeSource.UtcNow() -->
         <Rule Id="FFS0001" Action="Error"/>

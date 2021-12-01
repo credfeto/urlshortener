@@ -17,7 +17,7 @@ namespace Credfeto.UrlShortener.Shorteners
         }
 
         /// <inheritdoc />
-        public string Name { get; } = @"Generic";
+        public string Name { get; } = nameof(Generic);
 
         public Task<Uri> ShortenAsync(Uri fullUrl, CancellationToken cancellationToken)
         {
