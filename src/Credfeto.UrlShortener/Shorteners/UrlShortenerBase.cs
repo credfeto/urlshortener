@@ -13,11 +13,11 @@ namespace Credfeto.UrlShortener.Shorteners
         private readonly string _clientName;
         private readonly IHttpClientFactory _httpClientFactory;
 
-        protected UrlShortenerBase(IHttpClientFactory httpClientFactory, string clientName, ILogger logging)
+        protected UrlShortenerBase(IHttpClientFactory httpClientFactory, string clientName, ILogger logger)
         {
             this._httpClientFactory = httpClientFactory ?? throw new ArgumentNullException(nameof(httpClientFactory));
             this._clientName = clientName ?? throw new ArgumentNullException(nameof(clientName));
-            this.Logging = logging ?? throw new ArgumentNullException(nameof(logging));
+            this.Logging = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
         protected ILogger Logging { get; }
@@ -46,7 +46,7 @@ namespace Credfeto.UrlShortener.Shorteners
 
             serviceCollection.AddHttpClient(clientName)
                              .ConfigureHttpClient(ConfigureClient)
-                             .ConfigurePrimaryHttpMessageHandler(configureHandler: _ => new HttpClientHandler {AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate})
+                             .ConfigurePrimaryHttpMessageHandler(configureHandler: _ => new HttpClientHandler { AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate })
                              .AddPolicyHandler(Policy.TimeoutAsync<HttpResponseMessage>(TimeSpan.FromSeconds(value: 30)))
                              .AddTransientHttpErrorPolicy(configurePolicy: p => p.WaitAndRetryAsync(retryCount: maxRetries, sleepDurationProvider: Calculate));
         }

@@ -24,13 +24,13 @@ namespace Credfeto.UrlShortener.Shorteners
         private readonly JsonSerializerOptions _jsonSerializerOptions;
         private readonly GoogleConfiguration _options;
 
-        public Google(IHttpClientFactory httpClientFactory, IOptions<GoogleConfiguration> options, ILogger<Google> logging)
-            : base(httpClientFactory: httpClientFactory, clientName: HTTP_CLIENT_NAME, logging: logging)
+        public Google(IHttpClientFactory httpClientFactory, IOptions<GoogleConfiguration> options, ILogger<Google> logger)
+            : base(httpClientFactory: httpClientFactory, clientName: HTTP_CLIENT_NAME, logger: logger)
 
         {
             this._options = options.Value ?? throw new ArgumentNullException(nameof(options));
 
-            this._jsonSerializerOptions = new JsonSerializerOptions {PropertyNameCaseInsensitive = false, PropertyNamingPolicy = JsonNamingPolicy.CamelCase};
+            this._jsonSerializerOptions = new JsonSerializerOptions { PropertyNameCaseInsensitive = false, PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
         }
 
         /// <inheritdoc />
@@ -45,7 +45,7 @@ namespace Credfeto.UrlShortener.Shorteners
 
                 Uri uri = new("https://www.googleapis.com/urlshortener/v1/url?key=" + this._options.ApiKey);
 
-                string requestJson = JsonSerializer.Serialize(new Request {LongUrl = fullUrl.ToString()}, options: this._jsonSerializerOptions);
+                string requestJson = JsonSerializer.Serialize(new Request { LongUrl = fullUrl.ToString() }, options: this._jsonSerializerOptions);
 
                 using (StringContent requestContent = new(content: requestJson, encoding: Encoding.UTF8, mediaType: "application/json"))
                 {

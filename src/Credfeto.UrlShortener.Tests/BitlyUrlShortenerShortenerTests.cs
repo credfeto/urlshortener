@@ -14,24 +14,24 @@ using Xunit.Abstractions;
 namespace Credfeto.UrlShortener.Tests
 {
     /// <summary>
-    ///     The bitly url shortner tests.
+    ///     The bitly url shortener tests.
     /// </summary>
-    public sealed class BitlyUrlShortenerTests : TestBase
+    public sealed class BitlyUrlShortenerShortenerTests : ShortenerTestBase
     {
-        public BitlyUrlShortenerTests(ITestOutputHelper output)
-        {
-            this._httpClientFactory = Substitute.For<IHttpClientFactory>();
-            IOptions<BitlyConfiguration> options = Substitute.For<IOptions<BitlyConfiguration>>();
-            options.Value.Returns(new BitlyConfiguration {ApiKey = "Mock", Login = "default"});
-            this._output = output;
-            this._shortener = new Bitly(httpClientFactory: this._httpClientFactory, options: options, Substitute.For<ILogger<Bitly>>());
-        }
-
         private readonly IHttpClientFactory _httpClientFactory;
 
         private readonly ITestOutputHelper _output;
 
         private readonly IUrlShortener _shortener;
+
+        public BitlyUrlShortenerShortenerTests(ITestOutputHelper output)
+        {
+            this._httpClientFactory = Substitute.For<IHttpClientFactory>();
+            IOptions<BitlyConfiguration> options = Substitute.For<IOptions<BitlyConfiguration>>();
+            options.Value.Returns(new BitlyConfiguration { ApiKey = "Mock", Login = "default" });
+            this._output = output;
+            this._shortener = new Bitly(httpClientFactory: this._httpClientFactory, options: options, Substitute.For<ILogger<Bitly>>());
+        }
 
         [SuppressMessage(category: "Reliability", checkId: "CA2000:Dispose objects before losing scope", Justification = "For unit tests caller to dispose")]
         private void MockConnection()
@@ -55,7 +55,8 @@ namespace Credfeto.UrlShortener.Tests
             Assert.NotEqual(expected: originalUrl, shorterned.ToString());
             Assert.StartsWith(expectedStartString: "https://bit.ly/", shorterned.ToString(), comparisonType: StringComparison.OrdinalIgnoreCase);
             Assert.True(shorterned.ToString()
-                                  .Length <= originalUrl.Length);
+                                  .Length <= originalUrl.Length,
+                        userMessage: "Length should be less than original");
             Assert.Equal(expected: "https://bit.ly/fake", shorterned.ToString());
         }
     }

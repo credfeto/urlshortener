@@ -23,8 +23,8 @@ namespace Credfeto.UrlShortener.Shorteners
         private const string HTTP_CLIENT_NAME = nameof(Bitly);
         private readonly BitlyConfiguration _options;
 
-        public Bitly(IHttpClientFactory httpClientFactory, IOptions<BitlyConfiguration> options, ILogger<Bitly> logging)
-            : base(httpClientFactory: httpClientFactory, clientName: HTTP_CLIENT_NAME, logging: logging)
+        public Bitly(IHttpClientFactory httpClientFactory, IOptions<BitlyConfiguration> options, ILogger<Bitly> logger)
+            : base(httpClientFactory: httpClientFactory, clientName: HTTP_CLIENT_NAME, logger: logger)
         {
             this._options = options.Value ?? throw new ArgumentNullException(nameof(options));
         }
