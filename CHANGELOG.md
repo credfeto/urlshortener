@@ -11,6 +11,7 @@ Please ADD ALL Changes to the UNRELASED SECTION and not a specific release
 - SmartAnalyzers.CSharpExtensions.Annotations analyis
 - Added Meziantou analyzer
 - Added Philips.CodeAnalysis.DuplicateCodeAnalyzer
+- Nullable analyzer
 ### Fixed
 ### Changed
 ### Removed
