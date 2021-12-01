@@ -418,6 +418,11 @@
         <!-- CC0001 - Use var instead of specifying type name -->
         <Rule Id="CC0001" Action="None"/>
     </Rules>
+    <Rules AnalyzerId="SmartAnalyzers.CSharpExtensions.Annotations"
+           RuleNamespace="SmartAnalyzers.CSharpExtensions.Annotations">
+        <!-- CSE005 - Use the return value or discard it explicitly -->
+        <Rule Id="CSE005" Action="Info"/>
+    </Rules>
     <Rules AnalyzerId="FunFair.CodeAnalysis" RuleNamespace="FunFair.CodeAnalysis">
         <!-- FFS0001 - Avoid using DateTime.Now - Use IDateTimeSource.UtcNow() -->
         <Rule Id="FFS0001" Action="Error"/>
