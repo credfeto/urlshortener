@@ -2,26 +2,25 @@
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Credfeto.UrlShortener.Shorteners
+namespace Credfeto.UrlShortener.Shorteners;
+
+/// <summary>
+///     Generic URL Shortener.
+/// </summary>
+internal sealed class Generic : IUrlShortener
 {
-    /// <summary>
-    ///     Generic URL Shortener.
-    /// </summary>
-    internal sealed class Generic : IUrlShortener
+    private readonly Func<Uri, Uri> _shortener;
+
+    public Generic(Func<Uri, Uri> shortener)
     {
-        private readonly Func<Uri, Uri> _shortener;
+        this._shortener = shortener;
+    }
 
-        public Generic(Func<Uri, Uri> shortener)
-        {
-            this._shortener = shortener;
-        }
+    /// <inheritdoc />
+    public string Name { get; } = nameof(Generic);
 
-        /// <inheritdoc />
-        public string Name { get; } = nameof(Generic);
-
-        public Task<Uri> ShortenAsync(Uri fullUrl, CancellationToken cancellationToken)
-        {
-            return Task.FromResult(this._shortener(fullUrl));
-        }
+    public Task<Uri> ShortenAsync(Uri fullUrl, CancellationToken cancellationToken)
+    {
+        return Task.FromResult(this._shortener(fullUrl));
     }
 }

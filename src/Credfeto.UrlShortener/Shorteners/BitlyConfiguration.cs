@@ -1,18 +1,17 @@
-namespace Credfeto.UrlShortener.Shorteners
+namespace Credfeto.UrlShortener.Shorteners;
+
+/// <summary>
+///     Configuration for the Bitly url shortnener.
+/// </summary>
+public sealed class BitlyConfiguration
 {
     /// <summary>
-    ///     Configuration for the Bitly url shortnener.
+    ///     The Api key.
     /// </summary>
-    public sealed class BitlyConfiguration
-    {
-        /// <summary>
-        ///     The Api key.
-        /// </summary>
-        public string ApiKey { get; set; } = default!;
+    public string ApiKey { get; set; } = default!;
 
-        /// <summary>
-        ///     The login.
-        /// </summary>
-        public string Login { get; set; } = default!;
-    }
+    /// <summary>
+    ///     The login.
+    /// </summary>
+    public string Login { get; set; } = default!;
 }

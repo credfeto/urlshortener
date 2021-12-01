@@ -10,87 +10,86 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
-namespace Credfeto.UrlShortener.Shorteners
+namespace Credfeto.UrlShortener.Shorteners;
+
+/// <summary>
+///     Google's URL Shortener.
+/// </summary>
+/// <remarks>
+///     Get free key from http://code.google.com/apis/console/ for up to 1000000 shortenings per day.
+/// </remarks>
+public sealed class Google : UrlShortenerBase, IUrlShortener
 {
-    /// <summary>
-    ///     Google's URL Shortener.
-    /// </summary>
-    /// <remarks>
-    ///     Get free key from http://code.google.com/apis/console/ for up to 1000000 shortenings per day.
-    /// </remarks>
-    public sealed class Google : UrlShortenerBase, IUrlShortener
+    private const string HTTP_CLIENT_NAME = nameof(Google);
+    private readonly JsonSerializerOptions _jsonSerializerOptions;
+    private readonly GoogleConfiguration _options;
+
+    public Google(IHttpClientFactory httpClientFactory, IOptions<GoogleConfiguration> options, ILogger<Google> logger)
+        : base(httpClientFactory: httpClientFactory, clientName: HTTP_CLIENT_NAME, logger: logger)
+
     {
-        private const string HTTP_CLIENT_NAME = nameof(Google);
-        private readonly JsonSerializerOptions _jsonSerializerOptions;
-        private readonly GoogleConfiguration _options;
+        this._options = options.Value ?? throw new ArgumentNullException(nameof(options));
 
-        public Google(IHttpClientFactory httpClientFactory, IOptions<GoogleConfiguration> options, ILogger<Google> logger)
-            : base(httpClientFactory: httpClientFactory, clientName: HTTP_CLIENT_NAME, logger: logger)
+        this._jsonSerializerOptions = new JsonSerializerOptions { PropertyNameCaseInsensitive = false, PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
+    }
 
+    /// <inheritdoc />
+    public string Name { get; } = HTTP_CLIENT_NAME;
+
+    /// <inheritdoc />
+    public async Task<Uri> ShortenAsync([NotNull] Uri fullUrl, CancellationToken cancellationToken)
+    {
+        try
         {
-            this._options = options.Value ?? throw new ArgumentNullException(nameof(options));
+            HttpClient client = this.CreateClient();
 
-            this._jsonSerializerOptions = new JsonSerializerOptions { PropertyNameCaseInsensitive = false, PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
-        }
+            Uri uri = new("https://www.googleapis.com/urlshortener/v1/url?key=" + this._options.ApiKey);
 
-        /// <inheritdoc />
-        public string Name { get; } = HTTP_CLIENT_NAME;
+            string requestJson = JsonSerializer.Serialize(new Request { LongUrl = fullUrl.ToString() }, options: this._jsonSerializerOptions);
 
-        /// <inheritdoc />
-        public async Task<Uri> ShortenAsync([NotNull] Uri fullUrl, CancellationToken cancellationToken)
-        {
-            try
+            using (StringContent requestContent = new(content: requestJson, encoding: Encoding.UTF8, mediaType: "application/json"))
             {
-                HttpClient client = this.CreateClient();
+                HttpResponseMessage response = await client.PutAsync(requestUri: uri, content: requestContent, cancellationToken: cancellationToken);
 
-                Uri uri = new("https://www.googleapis.com/urlshortener/v1/url?key=" + this._options.ApiKey);
-
-                string requestJson = JsonSerializer.Serialize(new Request { LongUrl = fullUrl.ToString() }, options: this._jsonSerializerOptions);
-
-                using (StringContent requestContent = new(content: requestJson, encoding: Encoding.UTF8, mediaType: "application/json"))
+                if (!response.IsSuccessStatusCode)
                 {
-                    HttpResponseMessage response = await client.PutAsync(requestUri: uri, content: requestContent, cancellationToken: cancellationToken);
+                    return fullUrl;
+                }
 
-                    if (!response.IsSuccessStatusCode)
+                await using (Stream text = await response.Content.ReadAsStreamAsync(cancellationToken))
+                {
+                    Response? responseModel = await JsonSerializer.DeserializeAsync<Response>(utf8Json: text, options: this._jsonSerializerOptions, cancellationToken: cancellationToken);
+
+                    if (responseModel?.Id != null)
                     {
-                        return fullUrl;
-                    }
-
-                    await using (Stream text = await response.Content.ReadAsStreamAsync(cancellationToken))
-                    {
-                        Response? responseModel = await JsonSerializer.DeserializeAsync<Response>(utf8Json: text, options: this._jsonSerializerOptions, cancellationToken: cancellationToken);
-
-                        if (responseModel?.Id != null)
-                        {
-                            return new Uri(responseModel.Id);
-                        }
+                        return new Uri(responseModel.Id);
                     }
                 }
             }
-            catch (Exception exception)
-            {
-                this.Logging.LogError(new EventId(exception.HResult), exception: exception, $"Error: Could not build Short Url: {exception.Message}");
-            }
-
-            return fullUrl;
         }
-
-        public static void Register(IServiceCollection serviceCollection)
+        catch (Exception exception)
         {
-            serviceCollection.AddSingleton<IUrlShortener, Google>();
-
-            RegisterHttpClientFactory(serviceCollection: serviceCollection, userAgent: "Credfeto.UrlShortner.Google", clientName: HTTP_CLIENT_NAME, new Uri(uriString: @"https://www.googleapis.com"));
+            this.Logging.LogError(new EventId(exception.HResult), exception: exception, $"Error: Could not build Short Url: {exception.Message}");
         }
 
-        private sealed class Request
-        {
-            public string? LongUrl { get; set; }
-        }
+        return fullUrl;
+    }
 
-        [SuppressMessage(category: "Microsoft.Performance", checkId: "CA1812:AvoidUninstantiatedInternalClasses", Justification = "Used by serialization")]
-        private sealed class Response
-        {
-            public string? Id { get; set; }
-        }
+    public static void Register(IServiceCollection serviceCollection)
+    {
+        serviceCollection.AddSingleton<IUrlShortener, Google>();
+
+        RegisterHttpClientFactory(serviceCollection: serviceCollection, userAgent: "Credfeto.UrlShortner.Google", clientName: HTTP_CLIENT_NAME, new Uri(uriString: @"https://www.googleapis.com"));
+    }
+
+    private sealed class Request
+    {
+        public string? LongUrl { get; set; }
+    }
+
+    [SuppressMessage(category: "Microsoft.Performance", checkId: "CA1812:AvoidUninstantiatedInternalClasses", Justification = "Used by serialization")]
+    private sealed class Response
+    {
+        public string? Id { get; set; }
     }
 }
