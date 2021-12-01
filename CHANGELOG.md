@@ -10,6 +10,7 @@ Please ADD ALL Changes to the UNRELASED SECTION and not a specific release
 - CodeCracker analyis
 - SmartAnalyzers.CSharpExtensions.Annotations analyis
 - Added Meziantou analyzer
+- Added Philips.CodeAnalysis.DuplicateCodeAnalyzer
 ### Fixed
 ### Changed
 ### Removed
