@@ -16,6 +16,7 @@ Please ADD ALL Changes to the UNRELASED SECTION and not a specific release
 ### Changed
 - FF-1429 - Updated FunFair.Test.Common to 5.7.0.1478
 - FF-1429 - Updated SmartAnalyzers.CSharpExtensions.Annotations to 4.2.1
+- FF-1429 - Updated SonarAnalyzer.CSharp to 8.33.0.40503
 ### Removed
 ### Deployment Changes
 
