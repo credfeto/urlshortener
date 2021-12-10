@@ -53,6 +53,7 @@ Please ADD ALL Changes to the UNRELASED SECTION and not a specific release
 - FF-1429 - Updated HexMate to False
 - FF-1429 - Updated HtmlAgilityPack to False
 - FF-1429 - Updated IPAddressRange to False
+- FF-1429 - Updated Meziantou.Analyzer to 1.0.680
 ### Removed
 ### Deployment Changes
 
