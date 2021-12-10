@@ -44,6 +44,7 @@ Please ADD ALL Changes to the UNRELASED SECTION and not a specific release
 - FF-1429 - Updated FunFair.ServerMonitoring to False
 - FF-1429 - Updated FunFair.Server.Client.Package to False
 - FF-1429 - Updated FunFair.Client to False
+- FF-1429 - Updated FunFair.Server.Geo.Logic to False
 ### Removed
 ### Deployment Changes
 
