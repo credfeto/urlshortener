@@ -42,6 +42,7 @@ Please ADD ALL Changes to the UNRELASED SECTION and not a specific release
 - FF-1429 - Updated FunFair.Random to False
 - FF-1429 - Updated FunFair.RateLimit to False
 - FF-1429 - Updated FunFair.ServerMonitoring to False
+- FF-1429 - Updated FunFair.Server.Client.Package to False
 ### Removed
 ### Deployment Changes
 
