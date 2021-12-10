@@ -49,6 +49,7 @@ Please ADD ALL Changes to the UNRELASED SECTION and not a specific release
 - FF-1429 - Updated FunFair.SignalR to False
 - FF-1429 - Updated FunFair.Swagger to False
 - FF-1429 - Updated FunFair.Test.Common to False
+- FF-1429 - Updated FunFair.Trulioo.Client to False
 ### Removed
 ### Deployment Changes
 
