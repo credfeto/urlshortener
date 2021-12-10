@@ -24,6 +24,7 @@ Please ADD ALL Changes to the UNRELASED SECTION and not a specific release
 - FF-1429 - Updated coverlet to False
 - FF-1429 - Updated Cryptography.ECDSA.Secp256K1 to False
 - FF-1429 - Updated Dapper to False
+- FF-1429 - Updated Discord.Net to False
 ### Removed
 ### Deployment Changes
 
