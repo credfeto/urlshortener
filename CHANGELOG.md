@@ -20,6 +20,7 @@ Please ADD ALL Changes to the UNRELASED SECTION and not a specific release
 - FF-1429 - Updated FunFair.CodeAnalysis to 5.7.3.1052
 - FF-1429 - Updated AspNetCoreRateLimit to False
 - FF-1429 - Updated AWSSDK to False
+- FF-1429 - Updated Castle.Core to False
 ### Removed
 ### Deployment Changes
 
