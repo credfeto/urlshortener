@@ -52,6 +52,7 @@ Please ADD ALL Changes to the UNRELASED SECTION and not a specific release
 - FF-1429 - Updated FunFair.Trulioo.Client to False
 - FF-1429 - Updated HexMate to False
 - FF-1429 - Updated HtmlAgilityPack to False
+- FF-1429 - Updated IPAddressRange to False
 ### Removed
 ### Deployment Changes
 
