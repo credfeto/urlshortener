@@ -38,6 +38,7 @@ Please ADD ALL Changes to the UNRELASED SECTION and not a specific release
 - FF-1429 - Updated FunFair.Ethereum.Faucet to False
 - FF-1429 - Updated FunFair.Ethereum to False
 - FF-1429 - Updated FunFair.Game.Metadata to False
+- FF-1429 - Updated FunFair.ProfanityDetector to False
 ### Removed
 ### Deployment Changes
 
