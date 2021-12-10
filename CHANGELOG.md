@@ -21,6 +21,7 @@ Please ADD ALL Changes to the UNRELASED SECTION and not a specific release
 - FF-1429 - Updated AspNetCoreRateLimit to False
 - FF-1429 - Updated AWSSDK to False
 - FF-1429 - Updated Castle.Core to False
+- FF-1429 - Updated coverlet to False
 ### Removed
 ### Deployment Changes
 
