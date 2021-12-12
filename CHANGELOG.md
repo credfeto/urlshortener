@@ -54,6 +54,7 @@ Please ADD ALL Changes to the UNRELASED SECTION and not a specific release
 - FF-1429 - Updated HtmlAgilityPack to False
 - FF-1429 - Updated IPAddressRange to False
 - FF-1429 - Updated Meziantou.Analyzer to 1.0.680
+- FF-1429 - Updated SecurityCodeScan.VS2019 to 5.6.0
 ### Removed
 ### Deployment Changes
 
