@@ -43,7 +43,7 @@
         <ProjectReference Include="..\Credfeto.UrlShortener\Credfeto.UrlShortener.csproj" />
     </ItemGroup>
     <ItemGroup>
-        <PackageReference Include="FunFair.Test.Common" Version="5.7.0.1478" />
+        <PackageReference Include="FunFair.Test.Common" Version="5.7.2.1514" />
         <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.0.0" />
         <PackageReference Include="NSubstitute" Version="4.2.2" />
         <PackageReference Include="xunit" Version="2.4.1" />
