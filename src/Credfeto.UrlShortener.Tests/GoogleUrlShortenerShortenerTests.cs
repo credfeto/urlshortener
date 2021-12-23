@@ -36,7 +36,7 @@ public sealed class GoogleUrlShortenerShortenerTests : ShortenerTestBase
     [SuppressMessage(category: "Reliability", checkId: "CA2000:Dispose objects before losing scope", Justification = "For unit tests caller to dispose")]
     private void MockConnection()
     {
-        this._httpClientFactory.CreateClient("Google")
+        this._httpClientFactory.CreateClient(nameof(Google))
             .Returns(Create(httpStatusCode: HttpStatusCode.OK,
                             new { Id = "https://goo.gl/fake" },
                             new JsonSerializerOptions { DictionaryKeyPolicy = JsonNamingPolicy.CamelCase, PropertyNamingPolicy = JsonNamingPolicy.CamelCase }));

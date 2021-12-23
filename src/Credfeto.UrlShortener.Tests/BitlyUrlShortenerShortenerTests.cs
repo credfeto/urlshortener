@@ -36,7 +36,7 @@ public sealed class BitlyUrlShortenerShortenerTests : ShortenerTestBase
     [SuppressMessage(category: "Reliability", checkId: "CA2000:Dispose objects before losing scope", Justification = "For unit tests caller to dispose")]
     private void MockConnection()
     {
-        this._httpClientFactory.CreateClient("Bitly")
+        this._httpClientFactory.CreateClient(nameof(Bitly))
             .Returns(Create(httpStatusCode: HttpStatusCode.OK, responseMessage: "https://bit.ly/fake"));
     }
 
