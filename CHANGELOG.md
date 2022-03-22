@@ -7,12 +7,21 @@ Please ADD ALL Changes to the UNRELASED SECTION and not a specific release
 
 ## [Unreleased]
 ### Added
+### Fixed
+### Changed
+### Removed
+### Deployment Changes
+
+<!--
+Releases that have at least been deployed to staging, BUT NOT necessarily released to live.  Changes should be moved from [Unreleased] into here as they are merged into the appropriate release branch
+-->
+## [0.1.2] - 2022-03-22
+### Added
 - CodeCracker analyis
 - SmartAnalyzers.CSharpExtensions.Annotations analyis
 - Added Meziantou analyzer
 - Added Philips.CodeAnalysis.DuplicateCodeAnalyzer
 - Nullable analyzer
-### Fixed
 ### Changed
 - FF-1429 - Updated FunFair.Test.Common to 5.7.0.1478
 - FF-1429 - Updated SmartAnalyzers.CSharpExtensions.Annotations to 4.2.1
@@ -106,12 +115,7 @@ Please ADD ALL Changes to the UNRELASED SECTION and not a specific release
 - FF-1429 - Updated FunFair.Test.Common to 5.9.3.1699
 - FF-3881 - Updated DotNet SDK to 6.0.201
 - FF-1429 - Updated Meziantou.Analyzer to 1.0.698
-### Removed
-### Deployment Changes
 
-<!--
-Releases that have at least been deployed to staging, BUT NOT necessarily released to live.  Changes should be moved from [Unreleased] into here as they are merged into the appropriate release branch
--->
 ## [0.1.1] - 2021-12-01
 ### Changed
 - FF-1429 - Updated xunit.runner.visualstudio to 2.4.3
