@@ -17,8 +17,8 @@ Releases that have at least been deployed to staging, BUT NOT necessarily releas
 -->
 ## [0.1.2] - 2022-03-22
 ### Added
-- CodeCracker analyis
-- SmartAnalyzers.CSharpExtensions.Annotations analyis
+- CodeCracker analysis
+- SmartAnalyzers.CSharpExtensions.Annotations analysis
 - Added Meziantou analyzer
 - Added Philips.CodeAnalysis.DuplicateCodeAnalyzer
 - Nullable analyzer
@@ -27,41 +27,7 @@ Releases that have at least been deployed to staging, BUT NOT necessarily releas
 - FF-1429 - Updated SmartAnalyzers.CSharpExtensions.Annotations to 4.2.1
 - FF-1429 - Updated SonarAnalyzer.CSharp to 8.33.0.40503
 - FF-1429 - Updated FunFair.CodeAnalysis to 5.7.3.1052
-- FF-1429 - Updated AspNetCoreRateLimit to False
-- FF-1429 - Updated AWSSDK to False
-- FF-1429 - Updated Castle.Core to False
-- FF-1429 - Updated coverlet to False
 - FF-1429 - Updated Cryptography.ECDSA.Secp256K1 to False
-- FF-1429 - Updated Dapper to False
-- FF-1429 - Updated Discord.Net to False
-- FF-1429 - Updated dotnetstandard-bip39 to False
-- FF-1429 - Updated FluentValidation.AspNetCore to False
-- FF-1429 - Updated FunFair.Alerts.Dispatching to False
-- FF-1429 - Updated FunFair.Balance.Bot.Client to False
-- FF-1429 - Updated FunFair.Common to False
-- FF-1429 - Updated FunFair.Content.Package.Management to False
-- FF-1429 - Updated FunFair.Ethereum.Proxy.Client to False
-- FF-1429 - Updated FunFair.Ethereum.Balance.Client to False
-- FF-1429 - Updated FunFair.Ethereum.Shared.Networks to False
-- FF-1429 - Updated FunFair.Ethereum.TokenTransfer.Client to False
-- FF-1429 - Updated FunFair.Ethereum.Faucet to False
-- FF-1429 - Updated FunFair.Ethereum to False
-- FF-1429 - Updated FunFair.Game.Metadata to False
-- FF-1429 - Updated FunFair.ProfanityDetector to False
-- FF-1429 - Updated FunFair.Random to False
-- FF-1429 - Updated FunFair.RateLimit to False
-- FF-1429 - Updated FunFair.ServerMonitoring to False
-- FF-1429 - Updated FunFair.Server.Client.Package to False
-- FF-1429 - Updated FunFair.Client to False
-- FF-1429 - Updated FunFair.Server.Geo.Logic to False
-- FF-1429 - Updated FunFair.Server.Ethereum.Accounts to False
-- FF-1429 - Updated FunFair.SignalR to False
-- FF-1429 - Updated FunFair.Swagger to False
-- FF-1429 - Updated FunFair.Test.Common to False
-- FF-1429 - Updated FunFair.Trulioo.Client to False
-- FF-1429 - Updated HexMate to False
-- FF-1429 - Updated HtmlAgilityPack to False
-- FF-1429 - Updated IPAddressRange to False
 - FF-1429 - Updated Meziantou.Analyzer to 1.0.680
 - FF-1429 - Updated SecurityCodeScan.VS2019 to 5.6.0
 - FF-1429 - Updated Microsoft.Extensions to 6.0.1
