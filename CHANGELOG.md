@@ -11,6 +11,7 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 ### Changed
 - FF-1429 - Updated Philips.CodeAnalysis.MaintainabilityAnalyzers to 1.2.28
 - FF-1429 - Updated FunFair.Test.Common to 5.9.4.1729
+- FF-1429 - Updated Roslynator.Analyzers to 4.1.0
 ### Removed
 ### Deployment Changes
 
