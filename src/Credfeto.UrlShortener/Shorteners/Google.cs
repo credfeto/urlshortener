@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Net.Http;
@@ -12,12 +12,6 @@ using Microsoft.Extensions.Options;
 
 namespace Credfeto.UrlShortener.Shorteners;
 
-/// <summary>
-///     Google's URL Shortener.
-/// </summary>
-/// <remarks>
-///     Get free key from http://code.google.com/apis/console/ for up to 1000000 shortenings per day.
-/// </remarks>
 public sealed class Google : UrlShortenerBase, IUrlShortener
 {
     private const string HTTP_CLIENT_NAME = nameof(Google);
@@ -30,13 +24,11 @@ public sealed class Google : UrlShortenerBase, IUrlShortener
     {
         this._options = options.Value ?? throw new ArgumentNullException(nameof(options));
 
-        this._jsonSerializerOptions = new JsonSerializerOptions { PropertyNameCaseInsensitive = false, PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
+        this._jsonSerializerOptions = new() { PropertyNameCaseInsensitive = false, PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
     }
 
-    /// <inheritdoc />
     public string Name { get; } = HTTP_CLIENT_NAME;
 
-    /// <inheritdoc />
     public async Task<Uri> ShortenAsync([NotNull] Uri fullUrl, CancellationToken cancellationToken)
     {
         try
@@ -58,18 +50,19 @@ public sealed class Google : UrlShortenerBase, IUrlShortener
 
                 await using (Stream text = await response.Content.ReadAsStreamAsync(cancellationToken))
                 {
-                    Response? responseModel = await JsonSerializer.DeserializeAsync<Response>(utf8Json: text, options: this._jsonSerializerOptions, cancellationToken: cancellationToken);
+                    Response? responseModel =
+                        await JsonSerializer.DeserializeAsync<Response>(utf8Json: text, options: this._jsonSerializerOptions, cancellationToken: cancellationToken);
 
                     if (responseModel?.Id != null)
                     {
-                        return new Uri(responseModel.Id);
+                        return new(responseModel.Id);
                     }
                 }
             }
         }
         catch (Exception exception)
         {
-            this.Logging.LogError(new EventId(exception.HResult), exception: exception, $"Error: Could not build Short Url: {exception.Message}");
+            this.Logging.LogError(new(exception.HResult), exception: exception, $"Error: Could not build Short Url: {exception.Message}");
         }
 
         return fullUrl;
@@ -79,7 +72,10 @@ public sealed class Google : UrlShortenerBase, IUrlShortener
     {
         serviceCollection.AddSingleton<IUrlShortener, Google>();
 
-        RegisterHttpClientFactory(serviceCollection: serviceCollection, userAgent: "Credfeto.UrlShortner.Google", clientName: HTTP_CLIENT_NAME, new Uri(uriString: @"https://www.googleapis.com"));
+        RegisterHttpClientFactory(serviceCollection: serviceCollection,
+                                  userAgent: "Credfeto.UrlShortner.Google",
+                                  clientName: HTTP_CLIENT_NAME,
+                                  new(uriString: @"https://www.googleapis.com"));
     }
 
     private sealed class Request

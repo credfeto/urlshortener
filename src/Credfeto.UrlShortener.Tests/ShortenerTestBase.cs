@@ -14,7 +14,7 @@ public abstract class ShortenerTestBase : TestBase
     [SuppressMessage(category: "Reliability", checkId: "CA2000:Dispose objects before losing scope", Justification = "For unit tests caller to dispose")]
     public static HttpClient Create(HttpStatusCode httpStatusCode, string responseMessage)
     {
-        return new HttpClient(new MockHttpMessageHandler(statusCode: httpStatusCode, responseMessage: responseMessage)) { BaseAddress = new Uri("https://localhost") };
+        return new(new MockHttpMessageHandler(statusCode: httpStatusCode, responseMessage: responseMessage)) { BaseAddress = new("https://localhost") };
     }
 
     public static HttpClient Create<TResponseDto>(HttpStatusCode httpStatusCode, TResponseDto responseObject, JsonSerializerOptions jsonSerializerOptions)

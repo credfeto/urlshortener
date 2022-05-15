@@ -11,12 +11,6 @@ using Microsoft.Extensions.Options;
 
 namespace Credfeto.UrlShortener.Shorteners;
 
-/// <summary>
-///     Bit.ly's URL Shortener.
-/// </summary>
-/// <remarks>
-///     Get free key from https://bitly.com/a/your_api_key for up to 1000000 shortenings per day.
-/// </remarks>
 [SuppressMessage(category: "Microsoft.Naming", checkId: "CA1704:IdentifiersShouldBeSpelledCorrectly", Justification = "Bitly is name of site.")]
 public sealed class Bitly : UrlShortenerBase, IUrlShortener
 {
@@ -29,10 +23,8 @@ public sealed class Bitly : UrlShortenerBase, IUrlShortener
         this._options = options.Value ?? throw new ArgumentNullException(nameof(options));
     }
 
-    /// <inheritdoc />
     public string Name { get; } = nameof(Bitly);
 
-    /// <inheritdoc />
     public async Task<Uri> ShortenAsync(Uri fullUrl, CancellationToken cancellationToken)
     {
         string encodedUrl = HttpUtility.UrlEncode(fullUrl.ToString());
@@ -56,24 +48,25 @@ public sealed class Bitly : UrlShortenerBase, IUrlShortener
 
             string shortened = await response.Content.ReadAsStringAsync(cancellationToken);
 
-            return string.IsNullOrEmpty(shortened) ? fullUrl : new Uri(shortened);
+            return string.IsNullOrEmpty(shortened)
+                ? fullUrl
+                : new(shortened);
         }
         catch (Exception exception)
         {
-            this.Logging.LogError(new EventId(exception.HResult), exception: exception, $"Error: Could not build Short Url: {exception.Message}");
+            this.Logging.LogError(new(exception.HResult), exception: exception, $"Error: Could not build Short Url: {exception.Message}");
 
             return fullUrl;
         }
     }
 
-    /// <summary>
-    ///     Register's the bitly url shortnener
-    /// </summary>
-    /// <param name="serviceCollection"></param>
     public static void Register(IServiceCollection serviceCollection)
     {
         serviceCollection.AddSingleton<IUrlShortener, Bitly>();
 
-        RegisterHttpClientFactory(serviceCollection: serviceCollection, userAgent: "Credfeto.UrlShortner.Bitly", clientName: HTTP_CLIENT_NAME, new Uri(uriString: @"https://api-ssl.bit.ly/"));
+        RegisterHttpClientFactory(serviceCollection: serviceCollection,
+                                  userAgent: "Credfeto.UrlShortner.Bitly",
+                                  clientName: HTTP_CLIENT_NAME,
+                                  new(uriString: @"https://api-ssl.bit.ly/"));
     }
 }

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Net;
 using System.Net.Http;
@@ -13,9 +13,6 @@ using Xunit.Abstractions;
 
 namespace Credfeto.UrlShortener.Tests;
 
-/// <summary>
-///     The bitly url shortener tests.
-/// </summary>
 public sealed class BitlyUrlShortenerShortenerTests : ShortenerTestBase
 {
     private readonly IHttpClientFactory _httpClientFactory;
@@ -40,9 +37,6 @@ public sealed class BitlyUrlShortenerShortenerTests : ShortenerTestBase
             .Returns(Create(httpStatusCode: HttpStatusCode.OK, responseMessage: "https://bit.ly/fake"));
     }
 
-    /// <summary>
-    ///     The can shorten.
-    /// </summary>
     [Fact]
     public async Task CanShortenAsync()
     {
@@ -50,7 +44,7 @@ public sealed class BitlyUrlShortenerShortenerTests : ShortenerTestBase
 
         const string originalUrl = "https://www.markridgwell.co.uk/";
 
-        Uri shorterned = await this._shortener.ShortenAsync(new Uri(originalUrl), cancellationToken: CancellationToken.None);
+        Uri shorterned = await this._shortener.ShortenAsync(new(originalUrl), cancellationToken: CancellationToken.None);
         this._output.WriteLine(shorterned.ToString());
         Assert.NotEqual(expected: originalUrl, shorterned.ToString());
         Assert.StartsWith(expectedStartString: "https://bit.ly/", shorterned.ToString(), comparisonType: StringComparison.OrdinalIgnoreCase);

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Net;
 using System.Net.Http;
@@ -14,9 +14,6 @@ using Xunit.Abstractions;
 
 namespace Credfeto.UrlShortener.Tests;
 
-/// <summary>
-///     The google url shortner tests.
-/// </summary>
 public sealed class GoogleUrlShortenerShortenerTests : ShortenerTestBase
 {
     private readonly IHttpClientFactory _httpClientFactory;
@@ -39,12 +36,9 @@ public sealed class GoogleUrlShortenerShortenerTests : ShortenerTestBase
         this._httpClientFactory.CreateClient(nameof(Google))
             .Returns(Create(httpStatusCode: HttpStatusCode.OK,
                             new { Id = "https://goo.gl/fake" },
-                            new JsonSerializerOptions { DictionaryKeyPolicy = JsonNamingPolicy.CamelCase, PropertyNamingPolicy = JsonNamingPolicy.CamelCase }));
+                            new() { DictionaryKeyPolicy = JsonNamingPolicy.CamelCase, PropertyNamingPolicy = JsonNamingPolicy.CamelCase }));
     }
 
-    /// <summary>
-    ///     The can shorten.
-    /// </summary>
     [Fact]
     public async Task CanShortenAsync()
     {
@@ -52,7 +46,7 @@ public sealed class GoogleUrlShortenerShortenerTests : ShortenerTestBase
 
         const string originalUrl = "https://www.markridgwell.co.uk/";
 
-        Uri shorterned = await this._shortener.ShortenAsync(new Uri(originalUrl), cancellationToken: CancellationToken.None);
+        Uri shorterned = await this._shortener.ShortenAsync(new(originalUrl), cancellationToken: CancellationToken.None);
         this._output.WriteLine(shorterned.ToString());
         Assert.NotEqual(expected: originalUrl, shorterned.ToString());
         Assert.StartsWith(expectedStartString: "https://goo.gl/", shorterned.ToString(), comparisonType: StringComparison.OrdinalIgnoreCase);
