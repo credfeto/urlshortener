@@ -49,7 +49,9 @@ public sealed class Google : UrlShortenerBase, IUrlShortener
                 await using (Stream text = await response.Content.ReadAsStreamAsync(cancellationToken))
                 {
                     GoogleResponse? responseModel =
-                        await JsonSerializer.DeserializeAsync(utf8Json: text, jsonTypeInfo: GoogleSerializationContext.Default.GoogleResponse, cancellationToken: cancellationToken);
+                        await JsonSerializer.DeserializeAsync(utf8Json: text,
+                                                              jsonTypeInfo: GoogleSerializationContext.Default.GoogleResponse,
+                                                              cancellationToken: cancellationToken);
 
                     if (responseModel?.Id != null)
                     {
@@ -70,6 +72,9 @@ public sealed class Google : UrlShortenerBase, IUrlShortener
     {
         serviceCollection.AddSingleton<IUrlShortener, Google>();
 
-        RegisterHttpClientFactory(serviceCollection: serviceCollection, userAgent: "Credfeto.UrlShortner.Google", clientName: HTTP_CLIENT_NAME, new(uriString: @"https://www.googleapis.com"));
+        RegisterHttpClientFactory(serviceCollection: serviceCollection,
+                                  userAgent: "Credfeto.UrlShortner.Google",
+                                  clientName: HTTP_CLIENT_NAME,
+                                  new(uriString: @"https://www.googleapis.com"));
     }
 }
