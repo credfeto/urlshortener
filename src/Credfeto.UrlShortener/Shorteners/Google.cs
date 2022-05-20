@@ -6,6 +6,7 @@ using System.Text;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Credfeto.UrlShortener.Shorteners.Serialisation;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
@@ -15,7 +16,6 @@ namespace Credfeto.UrlShortener.Shorteners;
 public sealed class Google : UrlShortenerBase, IUrlShortener
 {
     private const string HTTP_CLIENT_NAME = nameof(Google);
-    private readonly JsonSerializerOptions _jsonSerializerOptions;
     private readonly GoogleConfiguration _options;
 
     public Google(IHttpClientFactory httpClientFactory, IOptions<GoogleConfiguration> options, ILogger<Google> logger)
@@ -23,8 +23,6 @@ public sealed class Google : UrlShortenerBase, IUrlShortener
 
     {
         this._options = options.Value ?? throw new ArgumentNullException(nameof(options));
-
-        this._jsonSerializerOptions = new() { PropertyNameCaseInsensitive = false, PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
     }
 
     public string Name { get; } = HTTP_CLIENT_NAME;
@@ -37,7 +35,7 @@ public sealed class Google : UrlShortenerBase, IUrlShortener
 
             Uri uri = new("https://www.googleapis.com/urlshortener/v1/url?key=" + this._options.ApiKey);
 
-            string requestJson = JsonSerializer.Serialize(new Request { LongUrl = fullUrl.ToString() }, options: this._jsonSerializerOptions);
+            string requestJson = JsonSerializer.Serialize(new() { LongUrl = fullUrl.ToString() }, jsonTypeInfo: GoogleSerializationContext.Default.GoogleRequest);
 
             using (StringContent requestContent = new(content: requestJson, encoding: Encoding.UTF8, mediaType: "application/json"))
             {
@@ -50,8 +48,8 @@ public sealed class Google : UrlShortenerBase, IUrlShortener
 
                 await using (Stream text = await response.Content.ReadAsStreamAsync(cancellationToken))
                 {
-                    Response? responseModel =
-                        await JsonSerializer.DeserializeAsync<Response>(utf8Json: text, options: this._jsonSerializerOptions, cancellationToken: cancellationToken);
+                    GoogleResponse? responseModel =
+                        await JsonSerializer.DeserializeAsync(utf8Json: text, jsonTypeInfo: GoogleSerializationContext.Default.GoogleResponse, cancellationToken: cancellationToken);
 
                     if (responseModel?.Id != null)
                     {
@@ -72,20 +70,6 @@ public sealed class Google : UrlShortenerBase, IUrlShortener
     {
         serviceCollection.AddSingleton<IUrlShortener, Google>();
 
-        RegisterHttpClientFactory(serviceCollection: serviceCollection,
-                                  userAgent: "Credfeto.UrlShortner.Google",
-                                  clientName: HTTP_CLIENT_NAME,
-                                  new(uriString: @"https://www.googleapis.com"));
-    }
-
-    private sealed class Request
-    {
-        public string? LongUrl { get; set; }
-    }
-
-    [SuppressMessage(category: "Microsoft.Performance", checkId: "CA1812:AvoidUninstantiatedInternalClasses", Justification = "Used by serialization")]
-    private sealed class Response
-    {
-        public string? Id { get; set; }
+        RegisterHttpClientFactory(serviceCollection: serviceCollection, userAgent: "Credfeto.UrlShortner.Google", clientName: HTTP_CLIENT_NAME, new(uriString: @"https://www.googleapis.com"));
     }
 }
