@@ -24,7 +24,6 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 - FF-1429 - Updated Microsoft.VisualStudio.Threading.Analyzers to 17.2.32
 - FF-1429 - Updated Microsoft.Extensions to 6.0.5
 - FF-1429 - Updated AsyncFixer to 1.6.0
-- FF-1429 - Updated Microsoft.NET.Test.Sdk to 17.2.0
 - FF-3881 - Updated DotNet SDK to 6.0.300
 - FF-1429 - Updated SmartAnalyzers.CSharpExtensions.Annotations to 4.2.3
 - FF-1429 - Updated SonarAnalyzer.CSharp to 8.39.0.47922
@@ -83,6 +82,7 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 - FF-1429 - Updated Meziantou.Analyzer to 1.0.717
 - FF-1429 - Updated Meziantou.Analyzer to 1.0.719
 - FF-1429 - Updated Meziantou.Analyzer to 1.0.720
+- FF-1429 - Updated Microsoft.NET.Test.Sdk to 17.3.1
 ### Removed
 ### Deployment Changes
 
