@@ -14,7 +14,6 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 - FF-1429 - Updated Roslynator.Analyzers to 4.1.0
 - FF-1429 - Updated SonarAnalyzer.CSharp to 8.37.0.45539
 - FF-1429 - Updated Microsoft.Extensions to 6.0.4
-- FF-1429 - Updated Meziantou.Analyzer to 1.0.700
 - FF-3881 - Updated DotNet SDK to 6.0.202
 - FF-1429 - Updated Meziantou.Analyzer to 1.0.701
 - FF-1429 - Updated SonarAnalyzer.CSharp to 8.38.0.46746
@@ -83,6 +82,7 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 - FF-1429 - Updated Meziantou.Analyzer to 1.0.720
 - FF-1429 - Updated Microsoft.NET.Test.Sdk to 17.3.1
 - FF-1429 - Updated Meziantou.Analyzer to 1.0.721
+- FF-1429 - Updated Meziantou.Analyzer to 1.0.722
 ### Removed
 ### Deployment Changes
 
