@@ -13,7 +13,6 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 - FF-1429 - Updated FunFair.Test.Common to 5.9.4.1729
 - FF-1429 - Updated Roslynator.Analyzers to 4.1.0
 - FF-1429 - Updated SonarAnalyzer.CSharp to 8.37.0.45539
-- FF-1429 - Updated Microsoft.Extensions to 6.0.4
 - FF-3881 - Updated DotNet SDK to 6.0.202
 - FF-1429 - Updated SonarAnalyzer.CSharp to 8.38.0.46746
 - FF-1429 - Updated xunit.runner.visualstudio to 2.4.4
@@ -83,6 +82,7 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 - FF-1429 - Updated FunFair.CodeAnalysis to 5.9.0.1493
 - FF-1429 - Updated Meziantou.Analyzer to 1.0.723
 - FF-1429 - Updated Meziantou.Analyzer to 1.0.725
+- FF-1429 - Updated Microsoft.Extensions to 6.0.9
 ### Removed
 ### Deployment Changes
 
