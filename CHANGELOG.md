@@ -34,7 +34,6 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 - FF-1429 - Updated FunFair.CodeAnalysis to 5.8.3.1353
 - FF-1429 - Updated FunFair.Test.Common to 5.9.8.1897
 - FF-1429 - Updated FunFair.Test.Common to 5.9.9.1903
-- FF-1429 - Updated Meziantou.Analyzer to 1.0.703
 - FF-1429 - Updated Meziantou.Analyzer to 1.0.704
 - FF-1429 - Updated FunFair.Test.Common to 5.9.10.1914
 - FF-1429 - Updated SonarAnalyzer.CSharp to 8.41.0.50478
@@ -83,6 +82,7 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 - FF-1429 - Updated Meziantou.Analyzer to 1.0.725
 - FF-1429 - Updated Microsoft.Extensions to 6.0.9
 - FF-3881 - Updated DotNet SDK to 6.0.401
+- FF-1429 - Updated Meziantou.Analyzer to 1.0.726
 ### Removed
 ### Deployment Changes
 
