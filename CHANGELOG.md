@@ -56,7 +56,7 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 - FF-1429 - Updated Microsoft.Extensions to 6.0.9
 - FF-3881 - Updated DotNet SDK to 6.0.401
 - FF-1429 - Updated SonarAnalyzer.CSharp to 8.45.0.54064
-- FF-1429 - Updated Meziantou.Analyzer to 1.0.729
+- FF-1429 - Updated Meziantou.Analyzer to 1.0.730
 ### Removed
 ### Deployment Changes
 
