@@ -9,7 +9,6 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 ### Added
 ### Fixed
 ### Changed
-- FF-1429 - Updated Philips.CodeAnalysis.MaintainabilityAnalyzers to 1.2.28
 - FF-1429 - Updated FunFair.Test.Common to 5.9.4.1729
 - FF-1429 - Updated Roslynator.Analyzers to 4.1.0
 - FF-1429 - Updated xunit.runner.visualstudio to 2.4.4
@@ -53,6 +52,7 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 - FF-1429 - Updated Microsoft.Extensions to 6.0.10
 - FF-1429 - Updated Meziantou.Analyzer to 1.0.734
 - FF-1429 - Updated SonarAnalyzer.CSharp to 8.47.0.55603
+- FF-1429 - Updated Philips.CodeAnalysis.MaintainabilityAnalyzers to 1.2.29
 ### Removed
 ### Deployment Changes
 
