@@ -51,7 +51,7 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 - FF-1429 - Updated SonarAnalyzer.CSharp to 8.47.0.55603
 - FF-1429 - Updated Philips.CodeAnalysis.MaintainabilityAnalyzers to 1.2.29
 - FF-1429 - Updated Microsoft.VisualStudio.Threading.Analyzers to 17.3.48
-- FF-1429 - Updated Meziantou.Analyzer to 1.0.739
+- FF-1429 - Updated Meziantou.Analyzer to 1.0.740
 ### Removed
 ### Deployment Changes
 
