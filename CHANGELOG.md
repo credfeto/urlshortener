@@ -9,7 +9,6 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 ### Added
 ### Fixed
 ### Changed
-- FF-1429 - Updated FunFair.Test.Common to 5.9.4.1729
 - FF-1429 - Updated Roslynator.Analyzers to 4.1.0
 - FF-1429 - Updated xunit.runner.visualstudio to 2.4.4
 - FF-1429 - Updated xunit.runner.visualstudio to 2.4.5
@@ -18,25 +17,14 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 - FF-1429 - Updated SmartAnalyzers.CSharpExtensions.Annotations to 4.2.3
 - FF-1429 - Updated SmartAnalyzers.CSharpExtensions.Annotations to 4.2.4
 - FF-1429 - Updated SmartAnalyzers.CSharpExtensions.Annotations to 4.2.5
-- FF-1429 - Updated FunFair.Test.Common to 5.9.5.1833
 - FF-1429 - Updated Roslynator.Analyzers to 4.1.1
-- FF-1429 - Updated FunFair.Test.Common to 5.9.6.1865
 - FF-3881 - Updated DotNet SDK to 6.0.301
-- FF-1429 - Updated FunFair.Test.Common to 5.9.7.1871
 - FF-1429 - Updated FunFair.CodeAnalysis to 5.8.3.1353
-- FF-1429 - Updated FunFair.Test.Common to 5.9.8.1897
-- FF-1429 - Updated FunFair.Test.Common to 5.9.9.1903
-- FF-1429 - Updated FunFair.Test.Common to 5.9.10.1914
-- FF-1429 - Updated FunFair.Test.Common to 6.0.0.1932
 - FF-1429 - Updated NSubstitute to 4.4.0
 - FF-3881 - Updated DotNet SDK to 6.0.302
-- FF-1429 - Updated FunFair.Test.Common to 6.0.1.1951
 - FF-1429 - Updated SmartAnalyzers.CSharpExtensions.Annotations to 4.2.6
 - FF-1429 - Updated SmartAnalyzers.CSharpExtensions.Annotations to 4.2.7
 - FF-1429 - Updated xunit to 2.4.2
-- FF-1429 - Updated FunFair.Test.Common to 6.0.2.1981
-- FF-1429 - Updated FunFair.Test.Common to 6.0.3.1991
-- FF-1429 - Updated FunFair.Test.Common to 6.0.4.1998
 - FF-3881 - Updated DotNet SDK to 6.0.400
 - FF-1429 - Updated FunFair.CodeAnalysis to 5.8.5.1436
 - FF-1429 - Updated SecurityCodeScan.VS2019 to 5.6.4
@@ -52,6 +40,7 @@ Please ADD ALL Changes to the UNRELEASED SECTION and not a specific release
 - FF-1429 - Updated Philips.CodeAnalysis.MaintainabilityAnalyzers to 1.2.29
 - FF-1429 - Updated Microsoft.VisualStudio.Threading.Analyzers to 17.3.48
 - FF-1429 - Updated Meziantou.Analyzer to 1.0.740
+- FF-1429 - Updated FunFair.Test.Common to 6.0.5.2217
 ### Removed
 ### Deployment Changes
 
