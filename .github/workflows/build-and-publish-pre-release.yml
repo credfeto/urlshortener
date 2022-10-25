@@ -57,7 +57,7 @@ jobs:
         if [[ -d src && -f src/global.json && ${{ hashfiles('**/*.sln', '**/*.csproj', '**/*.cs') }} != '' ]]; then echo 'Exists: true'; else echo 'Exists: false'; fi
     - if: ${{ steps.check_files.outputs.FILES_EXIST == 'true' }}
       name: Determine .net core version
-      uses: credfeto/action-dotnet-version-detect@v1.2.1
+      uses: credfeto/action-dotnet-version-detect@feat/use-environment-files
 
     - if: ${{ steps.check_files.outputs.FILES_EXIST == 'true' }}
       name: Setup .NET Core
